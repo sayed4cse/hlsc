@@ -1805,7 +1805,7 @@ window.saveNotice = function(){
 // ════════════════════════════════════════════════════════
 // GOOGLE SHEETS INTEGRATION
 // ════════════════════════════════════════════════════════
-const SHEETS_URL='https://script.google.com/macros/s/AKfycbwy2H2uXPJkMGQcgmb4Zw5fT1n4rkH4KTtK_BGp1l5AGwB1uiKGonPvGUpy1XW5gZb5fQ/exec';
+const SHEETS_URL='https://script.google.com/macros/s/AKfycbzyR6xOD66XQO0fyiTVtii2xLE-9K0_whIPf7kl6g9-/dev';
 function sheetsPost(action,data){
   fetch(SHEETS_URL,{method:'POST',body:JSON.stringify({action,data})})
     .then(r=>r.json())
