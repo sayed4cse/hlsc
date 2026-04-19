@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EduManage Pro — Next Gen School OS</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+/* ══════════════════════════════════════════════════════════
+   EduManage Pro — NEXT GEN SCHOOL OS
+   Aesthetic: Deep Space × Bioluminescent × Precision Grid
+   Dark obsidian + Neon cyan + Electric amber
+══════════════════════════════════════════════════════════ */
+:root {
+  --bg:         #080c14;
+  --bg1:        #0c1220;
+  --bg2:        #101828;
+  --bg3:        #162033;
+  --bg4:        #1e2d45;
+  --panel:      rgba(16,24,40,.85);
+  --glass:      rgba(255,255,255,.04);
+  --glass2:     rgba(255,255,255,.07);
+  --glass3:     rgba(255,255,255,.11);
+  --cyan:       #00e5ff;
+  --cyan2:      #00b4d8;
+  --amber:      #ffb300;
+  --amber2:     #ff8f00;
+  --emerald:    #00e676;
+  --rose:       #ff4081;
+  --violet:     #7c4dff;
+  --sky:        #40c4ff;
+  --text:       #eef2f8;
+  --text2:      #8899b3;
+  --text3:      #4a5878;
+  --border:     rgba(0,229,255,.1);
+  --border2:    rgba(255,255,255,.06);
+  --glow-c:     0 0 30px rgba(0,229,255,.2);
+  --glow-a:     0 0 30px rgba(255,179,0,.2);
+  --glow-e:     0 0 30px rgba(0,230,118,.2);
+  --radius:     14px;
+  --sidebar-w:  270px;
+  --sidebar-c:  68px;
+  --ease:       cubic-bezier(.4,0,.2,1);
+  --spring:     cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans Bengali','Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+.hidden{display:none!important;}
+
+/* NOISE TEXTURE */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(0,229,255,.2);border-radius:4px;}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,229,255,.4);}
+
+/* ══ KEYFRAMES ══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:scale(1);}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(0,229,255,.3);}50%{box-shadow:0 0 0 8px rgba(0,229,255,0);}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes wave{0%,100%{transform:scaleY(1);}50%{transform:scaleY(.4);}}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+@keyframes orb-drift{0%{transform:translate(0,0) scale(1) rotate(0deg);}33%{transform:translate(40px,-30px) scale(1.05) rotate(120deg);}66%{transform:translate(-20px,20px) scale(.95) rotate(240deg);}100%{transform:translate(0,0) scale(1) rotate(360deg);}}
+@keyframes grid-scroll{0%{transform:translateY(0);}100%{transform:translateY(40px);}}
+@keyframes count-up{from{opacity:0;transform:scale(.5);}to{opacity:1;transform:scale(1);}}
+@keyframes bar-grow{from{height:0;}to{height:var(--h);}}
+@keyframes ring-fill{from{stroke-dashoffset:283;}to{stroke-dashoffset:var(--offset);}}
+@keyframes bounce-in{0%{transform:scale(0);}60%{transform:scale(1.1);}100%{transform:scale(1);}}
+
+/* ══ LOGIN ══ */
+.login-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:1000;overflow:hidden;background:var(--bg);}
+.login-bg{position:absolute;inset:0;}
+.orb{position:absolute;border-radius:50%;filter:blur(100px);animation:orb-drift 20s linear infinite;}
+.orb1{width:600px;height:600px;background:radial-gradient(circle,rgba(0,180,216,.25),transparent);top:-200px;left:-200px;animation-duration:25s;}
+.orb2{width:400px;height:400px;background:radial-gradient(circle,rgba(124,77,255,.2),transparent);bottom:-100px;right:-100px;animation-duration:18s;animation-delay:-8s;}
+.orb3{width:300px;height:300px;background:radial-gradient(circle,rgba(0,230,118,.15),transparent);top:50%;right:20%;animation-duration:22s;animation-delay:-4s;}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(0,229,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.03) 1px,transparent 1px);background-size:48px 48px;animation:grid-scroll 8s linear infinite;}
+.scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,229,255,.012) 2px,rgba(0,229,255,.012) 4px);pointer-events:none;}
+
+.login-card{position:relative;z-index:10;width:100%;max-width:440px;padding:44px 40px;background:rgba(12,18,32,.9);border:1px solid rgba(0,229,255,.18);border-radius:22px;backdrop-filter:blur(32px);box-shadow:0 40px 100px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08),var(--glow-c);animation:scaleIn .5s var(--spring) both;}
+.login-top{text-align:center;margin-bottom:32px;}
+.login-logo-wrap{position:relative;display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;margin-bottom:14px;}
+.login-logo-icon{font-size:2.8rem;animation:float 4s ease-in-out infinite;}
+.logo-ring{position:absolute;inset:0;border:2px solid rgba(0,229,255,.3);border-radius:50%;animation:spin 8s linear infinite;}
+.logo-ring2{position:absolute;inset:6px;border:1px solid rgba(0,229,255,.15);border-radius:50%;animation:spin 5s linear infinite reverse;}
+.login-school{font-family:'Instrument Serif',serif;font-size:1.8rem;color:var(--text);line-height:1.1;}
+.login-school em{color:var(--cyan);font-style:normal;}
+.login-tagline{font-size:.78rem;color:var(--text3);margin-top:5px;letter-spacing:.5px;}
+
+.role-selector{display:flex;gap:6px;background:rgba(0,0,0,.4);border-radius:12px;padding:5px;margin-bottom:24px;border:1px solid var(--border2);}
+.role-btn{flex:1;padding:8px 6px;border:none;border-radius:8px;background:transparent;color:var(--text2);font-family:'Noto Sans Bengali','Syne',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s var(--ease);position:relative;overflow:hidden;}
+.role-btn.active{background:linear-gradient(135deg,rgba(0,180,216,.3),rgba(0,229,255,.2));color:var(--cyan);border:1px solid rgba(0,229,255,.3);box-shadow:0 2px 12px rgba(0,229,255,.2);}
+.role-btn:not(.active):hover{background:var(--glass);color:var(--text);}
+
+.input-field{position:relative;margin-bottom:16px;}
+.input-field label{display:block;font-size:.72rem;color:var(--text3);margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;}
+.input-field input{width:100%;padding:12px 16px;background:rgba(255,255,255,.05);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:'Noto Sans Bengali','Syne',sans-serif;font-size:.9rem;transition:all .2s var(--ease);}
+.input-field input:focus{outline:none;border-color:rgba(0,229,255,.5);background:rgba(0,229,255,.06);box-shadow:0 0 0 4px rgba(0,229,255,.08),var(--glow-c);}
+.input-field input::placeholder{color:var(--text3);}
+
+.login-cta{width:100%;padding:13px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--cyan2),var(--cyan));color:#000;font-family:'Syne','Noto Sans Bengali',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;letter-spacing:.5px;transition:all .2s var(--spring);position:relative;overflow:hidden;margin-top:4px;}
+.login-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);opacity:0;transition:opacity .2s;}
+.login-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,229,255,.4);}
+.login-cta:hover::before{opacity:1;}
+.login-cta:active{transform:translateY(0);}
+.demo-creds{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:16px;}
+.demo-cred{padding:6px 8px;background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:7px;font-size:.7rem;color:var(--text3);text-align:center;cursor:pointer;transition:all .15s;}
+.demo-cred:hover{border-color:var(--border);color:var(--text2);}
+.demo-cred strong{display:block;color:var(--cyan);font-size:.72rem;}
+
+/* ══ APP SHELL ══ */
+.app{display:flex;min-height:100vh;position:relative;}
+
+/* ══ SIDEBAR ══ */
+.sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--bg1);border-right:1px solid var(--border2);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:300;transition:width .3s var(--ease);overflow:hidden;}
+.sidebar.collapsed{width:var(--sidebar-c);}
+.sidebar.collapsed .hide-collapsed{display:none!important;}
+.sidebar.collapsed .sidebar-header-inner{justify-content:center;}
+.sidebar.collapsed .nav-item{justify-content:center;padding:10px;}
+.sidebar.collapsed .nav-icon{margin:0;}
+
+.sidebar-top{display:flex;flex-direction:column;}
+.sidebar-header-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 16px;border-bottom:1px solid var(--border2);}
+.logo-mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,rgba(0,180,216,.4),rgba(0,229,255,.2));border:1px solid rgba(0,229,255,.3);display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:1.1rem;font-weight:700;color:var(--cyan);flex-shrink:0;position:relative;}
+.logo-mark::after{content:'';position:absolute;inset:-3px;border-radius:13px;border:1px solid rgba(0,229,255,.1);}
+.brand-text{margin-left:10px;}
+.brand-name{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:800;color:var(--text);letter-spacing:.5px;}
+.brand-sub{font-size:.66rem;color:var(--text3);letter-spacing:.3px;}
+.toggle-btn{background:none;border:none;color:var(--text3);cursor:pointer;padding:6px;border-radius:7px;transition:all .15s;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.toggle-btn:hover{background:var(--glass);color:var(--cyan);}
+
+.sidebar-user{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border2);}
+.user-av{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0;position:relative;}
+.user-av::after{content:'';position:absolute;bottom:-2px;right:-2px;width:10px;height:10px;border-radius:50%;background:var(--emerald);border:2px solid var(--bg1);}
+.user-name{font-size:.85rem;font-weight:600;color:var(--text);line-height:1.2;}
+.user-title{font-size:.7rem;color:var(--cyan);}
+
+.sidebar-nav{flex:1;overflow-y:auto;padding:8px 8px;}
+.nav-group-label{padding:8px 10px 4px;font-size:.63rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;cursor:pointer;transition:all .18s var(--ease);color:var(--text2);font-size:.84rem;font-weight:500;position:relative;margin-bottom:1px;}
+.nav-item:hover{background:var(--glass);color:var(--text);}
+.nav-item.active{background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(0,180,216,.08));color:var(--cyan);font-weight:700;}
+.nav-item.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:2.5px;background:var(--cyan);border-radius:0 3px 3px 0;}
+.nav-icon{font-size:1.05rem;width:20px;text-align:center;flex-shrink:0;transition:transform .2s var(--spring);}
+.nav-item:hover .nav-icon{transform:scale(1.15);}
+.nav-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.nav-badge{background:var(--rose);color:#fff;font-size:.6rem;padding:2px 6px;border-radius:10px;font-weight:700;flex-shrink:0;animation:pulse-glow 2s infinite;}
+
+.sidebar-footer{padding:10px 8px;border-top:1px solid var(--border2);}
+.logout-btn{width:100%;display:flex;align-items:center;gap:8px;padding:10px 12px;border:none;border-radius:9px;background:rgba(255,64,129,.08);color:var(--rose);cursor:pointer;font-family:'Noto Sans Bengali','Syne',sans-serif;font-size:.83rem;font-weight:600;transition:all .18s;border:1px solid transparent;}
+.logout-btn:hover{background:rgba(255,64,129,.15);border-color:rgba(255,64,129,.2);}
+.logout-btn span{white-space:nowrap;}
+
+/* ══ MAIN ══ */
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh;transition:margin-left .3s var(--ease);}
+.main.wide{margin-left:var(--sidebar-c);}
+
+/* ══ TOPBAR ══ */
+.topbar{height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;background:rgba(8,12,20,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border2);position:sticky;top:0;z-index:200;}
+.topbar-l{display:flex;align-items:center;gap:14px;}
+.mob-toggle{background:none;border:none;color:var(--text2);cursor:pointer;padding:7px;border-radius:8px;transition:all .15s;display:none;}
+.mob-toggle:hover{background:var(--glass);color:var(--cyan);}
+.breadcrumb{font-size:.8rem;color:var(--text3);display:flex;align-items:center;gap:6px;}
+.breadcrumb .sep{opacity:.4;}
+.breadcrumb .current{color:var(--cyan);font-weight:600;}
+.topbar-r{display:flex;align-items:center;gap:12px;}
+.topbar-date{font-size:.74rem;color:var(--text3);font-family:'JetBrains Mono',monospace;}
+
+/* Search */
+.search-wrap{position:relative;}
+.top-search{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:9px;padding:7px 12px;cursor:text;transition:all .2s;}
+.top-search:focus-within{border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.04);box-shadow:var(--glow-c);}
+.top-search input{background:none;border:none;outline:none;color:var(--text);font-family:'Noto Sans Bengali',sans-serif;font-size:.82rem;width:160px;}
+.top-search input::placeholder{color:var(--text3);}
+
+/* Notif */
+.notif-wrap{position:relative;}
+.notif-icon{width:36px;height:36px;border-radius:9px;background:var(--glass);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;font-size:1rem;}
+.notif-icon:hover{background:var(--glass2);border-color:var(--border);}
+.notif-dot{position:absolute;top:-2px;right:-2px;width:16px;height:16px;border-radius:50%;background:var(--rose);border:2px solid var(--bg);font-size:.6rem;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.notif-panel{position:absolute;right:0;top:calc(100%+10px);width:290px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.5),var(--glow-c);display:none;animation:slideDown .2s var(--ease);}
+.notif-panel.open{display:block;}
+.notif-head{padding:14px 16px;font-weight:700;font-size:.82rem;border-bottom:1px solid var(--border2);color:var(--text);display:flex;align-items:center;justify-content:space-between;}
+.notif-clear{font-size:.7rem;color:var(--cyan);cursor:pointer;}
+.notif-row{display:flex;align-items:flex-start;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border2);cursor:pointer;transition:all .15s;}
+.notif-row:hover{background:var(--glass);}
+.notif-row:last-child{border-bottom:none;}
+.notif-emoji{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;}
+.notif-text{font-size:.78rem;color:var(--text2);line-height:1.5;}
+.notif-time{font-size:.68rem;color:var(--text3);margin-top:2px;}
+
+.user-chip{display:flex;align-items:center;gap:8px;padding:5px 10px 5px 6px;background:var(--glass);border:1px solid var(--border2);border-radius:20px;cursor:pointer;transition:all .15s;}
+.user-chip:hover{background:var(--glass2);border-color:var(--border);}
+.chip-av{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;}
+.chip-name{font-size:.78rem;font-weight:600;color:var(--text);}
+
+/* ══ PAGE ══ */
+.page{flex:1;padding:26px;overflow-y:auto;animation:fadeUp .35s var(--ease) both;}
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;gap:12px;flex-wrap:wrap;}
+.page-title{font-family:'Instrument Serif',serif;font-size:2rem;color:var(--text);line-height:1.1;}
+.page-title em{color:var(--cyan);font-style:normal;}
+.page-sub{font-size:.8rem;color:var(--text3);margin-top:4px;}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* ══ BUTTONS ══ */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border:none;border-radius:9px;font-family:'Noto Sans Bengali','Syne',sans-serif;font-size:.83rem;font-weight:700;cursor:pointer;transition:all .18s var(--ease);letter-spacing:.2px;}
+.btn-cyan{background:linear-gradient(135deg,rgba(0,180,216,.8),rgba(0,229,255,.6));color:#000;border:1px solid rgba(0,229,255,.4);}
+.btn-cyan:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,229,255,.3);}
+.btn-amber{background:linear-gradient(135deg,rgba(255,143,0,.8),rgba(255,179,0,.6));color:#000;border:1px solid rgba(255,179,0,.4);}
+.btn-amber:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,179,0,.3);}
+.btn-emerald{background:rgba(0,230,118,.1);color:var(--emerald);border:1px solid rgba(0,230,118,.25);}
+.btn-emerald:hover{background:rgba(0,230,118,.18);}
+.btn-rose{background:rgba(255,64,129,.1);color:var(--rose);border:1px solid rgba(255,64,129,.25);}
+.btn-rose:hover{background:rgba(255,64,129,.18);}
+.btn-ghost{background:var(--glass);color:var(--text2);border:1px solid var(--border2);}
+.btn-ghost:hover{background:var(--glass2);color:var(--text);border-color:var(--border);}
+.btn-sm{padding:6px 13px;font-size:.76rem;}
+.btn-xs{padding:4px 9px;font-size:.7rem;}
+.btn-icon{padding:8px;aspect-ratio:1;}
+
+/* ══ CARDS ══ */
+.card{background:var(--glass);border:1px solid var(--border2);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden;transition:all .2s var(--ease);}
+.card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,229,255,.02),transparent);pointer-events:none;}
+.card-title{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:6px;}
+
+/* ══ STAT CARDS ══ */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:14px;margin-bottom:22px;}
+.stat-card{background:var(--glass);border:1px solid var(--border2);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden;cursor:pointer;transition:all .22s var(--ease);}
+.stat-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3);}
+.stat-card.c-cyan{border-color:rgba(0,229,255,.15);}
+.stat-card.c-amber{border-color:rgba(255,179,0,.15);}
+.stat-card.c-emerald{border-color:rgba(0,230,118,.15);}
+.stat-card.c-rose{border-color:rgba(255,64,129,.15);}
+.stat-card.c-violet{border-color:rgba(124,77,255,.15);}
+.stat-glow{position:absolute;top:-40px;right:-40px;width:100px;height:100px;border-radius:50%;opacity:.15;filter:blur(20px);}
+.c-cyan .stat-glow{background:var(--cyan);}
+.c-amber .stat-glow{background:var(--amber);}
+.c-emerald .stat-glow{background:var(--emerald);}
+.c-rose .stat-glow{background:var(--rose);}
+.c-violet .stat-glow{background:var(--violet);}
+.stat-icon-wrap{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:12px;position:relative;}
+.c-cyan .stat-icon-wrap{background:rgba(0,229,255,.1);}
+.c-amber .stat-icon-wrap{background:rgba(255,179,0,.1);}
+.c-emerald .stat-icon-wrap{background:rgba(0,230,118,.1);}
+.c-rose .stat-icon-wrap{background:rgba(255,64,129,.1);}
+.c-violet .stat-icon-wrap{background:rgba(124,77,255,.1);}
+.stat-val{font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;line-height:1;}
+.c-cyan .stat-val{color:var(--cyan);}
+.c-amber .stat-val{color:var(--amber);}
+.c-emerald .stat-val{color:var(--emerald);}
+.c-rose .stat-val{color:var(--rose);}
+.c-violet .stat-val{color:var(--violet);}
+.stat-label{font-size:.77rem;color:var(--text3);margin-top:5px;}
+.stat-delta{font-size:.71rem;margin-top:6px;display:flex;align-items:center;gap:3px;}
+.stat-delta.up{color:var(--emerald);}
+.stat-delta.dn{color:var(--rose);}
+
+/* ══ TABLES ══ */
+.tbl-wrap{overflow-x:auto;border-radius:var(--radius);}
+table.tbl{width:100%;border-collapse:collapse;font-size:.83rem;}
+.tbl th{padding:11px 14px;text-align:left;background:rgba(0,0,0,.3);border-bottom:1px solid var(--border2);color:var(--text3);font-size:.69rem;text-transform:uppercase;letter-spacing:.6px;font-weight:700;white-space:nowrap;}
+.tbl th:first-child{border-radius:10px 0 0 0;}
+.tbl th:last-child{border-radius:0 10px 0 0;}
+.tbl td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text2);vertical-align:middle;}
+.tbl tbody tr{transition:background .15s;}
+.tbl tbody tr:hover{background:rgba(0,229,255,.03);}
+.tbl tbody tr:last-child td{border-bottom:none;}
+.tbl tbody tr:last-child td:first-child{border-radius:0 0 0 10px;}
+.tbl tbody tr:last-child td:last-child{border-radius:0 0 10px 0;}
+
+/* ══ BADGES ══ */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.2px;}
+.bg-cyan{background:rgba(0,229,255,.12);color:var(--cyan);border:1px solid rgba(0,229,255,.2);}
+.bg-amber{background:rgba(255,179,0,.12);color:var(--amber);border:1px solid rgba(255,179,0,.2);}
+.bg-emerald{background:rgba(0,230,118,.12);color:var(--emerald);border:1px solid rgba(0,230,118,.2);}
+.bg-rose{background:rgba(255,64,129,.12);color:var(--rose);border:1px solid rgba(255,64,129,.2);}
+.bg-violet{background:rgba(124,77,255,.12);color:var(--violet);border:1px solid rgba(124,77,255,.2);}
+.bg-gray{background:rgba(255,255,255,.06);color:var(--text3);border:1px solid var(--border2);}
+
+/* ══ FORMS ══ */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
+.fg{display:flex;flex-direction:column;gap:6px;}
+.fg label{font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;font-weight:700;}
+.fg input,.fg select,.fg textarea{padding:10px 13px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:9px;color:var(--text);font-family:'Noto Sans Bengali','Syne',sans-serif;font-size:.86rem;transition:all .18s var(--ease);}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:rgba(0,229,255,.4);background:rgba(0,229,255,.05);box-shadow:0 0 0 3px rgba(0,229,255,.08);}
+.fg select option{background:var(--bg2);}
+.fg textarea{resize:vertical;min-height:80px;}
+.fg-full{grid-column:1/-1;}
+
+/* ══ MODAL ══ */
+.backdrop{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:600;display:flex;align-items:center;justify-content:center;animation:fadeIn .18s;}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:28px;width:90%;max-width:580px;max-height:88vh;overflow-y:auto;animation:scaleIn .22s var(--spring);box-shadow:0 40px 80px rgba(0,0,0,.6),var(--glow-c);}
+.modal-lg{max-width:780px;}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;}
+.modal-title{font-family:'Instrument Serif',serif;font-size:1.35rem;color:var(--text);}
+.modal-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.2rem;padding:5px;border-radius:7px;transition:all .15s;line-height:1;}
+.modal-close:hover{background:rgba(255,64,129,.1);color:var(--rose);}
+.modal-foot{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;padding-top:16px;border-top:1px solid var(--border2);}
+
+/* ══ SEARCH BAR ══ */
+.search-bar{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:9px;padding:9px 13px;transition:all .18s;}
+.search-bar:focus-within{border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.04);}
+.search-bar input{background:none;border:none;outline:none;color:var(--text);font-family:'Noto Sans Bengali',sans-serif;font-size:.86rem;flex:1;}
+.search-bar input::placeholder{color:var(--text3);}
+
+/* ══ TABS ══ */
+.tab-bar{display:flex;gap:3px;background:rgba(0,0,0,.25);border-radius:11px;padding:4px;margin-bottom:18px;flex-wrap:wrap;border:1px solid var(--border2);}
+.tab{padding:7px 15px;border:none;border-radius:8px;background:transparent;color:var(--text3);font-family:'Noto Sans Bengali','Syne',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .15s var(--ease);}
+.tab.active{background:linear-gradient(135deg,rgba(0,229,255,.15),rgba(0,180,216,.1));color:var(--cyan);border:1px solid rgba(0,229,255,.2);}
+.tab:hover:not(.active){background:var(--glass);color:var(--text2);}
+
+/* ══ PROGRESS ══ */
+.prog-bar{background:rgba(255,255,255,.06);border-radius:99px;height:5px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:99px;transition:width .6s var(--ease);}
+.pf-cyan{background:linear-gradient(90deg,var(--cyan2),var(--cyan));}
+.pf-amber{background:linear-gradient(90deg,var(--amber2),var(--amber));}
+.pf-emerald{background:linear-gradient(90deg,#00c853,var(--emerald));}
+.pf-rose{background:linear-gradient(90deg,#c51162,var(--rose));}
+
+/* ══ TIMELINE ══ */
+.timeline{padding-left:16px;border-left:1px solid rgba(0,229,255,.2);}
+.tl-item{position:relative;padding:0 0 18px 18px;}
+.tl-item::before{content:'';position:absolute;left:-5px;top:5px;width:9px;height:9px;border-radius:50%;border:2px solid var(--cyan);background:var(--bg2);box-shadow:0 0 8px rgba(0,229,255,.4);}
+.tl-time{font-size:.68rem;color:var(--text3);margin-bottom:3px;font-family:'JetBrains Mono',monospace;}
+.tl-text{font-size:.82rem;color:var(--text2);}
+
+/* ══ ATTENDANCE CAL ══ */
+.att-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:8px;}
+.att-cell{aspect-ratio:1;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;cursor:default;transition:transform .1s;}
+.att-cell:hover{transform:scale(1.1);}
+.att-P{background:rgba(0,230,118,.18);color:var(--emerald);}
+.att-A{background:rgba(255,64,129,.18);color:var(--rose);}
+.att-H{background:rgba(255,255,255,.04);color:var(--text3);}
+.att-L{background:rgba(255,179,0,.18);color:var(--amber);}
+
+/* ══ NOTICE ITEMS ══ */
+.notice-card{border-left:3px solid var(--cyan);padding:14px 18px;background:var(--glass);border-radius:0 10px 10px 0;margin-bottom:10px;transition:all .18s;cursor:pointer;}
+.notice-card:hover{background:var(--glass2);transform:translateX(3px);}
+.notice-card.urgent{border-left-color:var(--rose);}
+.notice-card.event{border-left-color:var(--amber);}
+.notice-title{font-size:.88rem;font-weight:700;color:var(--text);}
+.notice-meta{font-size:.7rem;color:var(--text3);margin-top:3px;}
+.notice-body{font-size:.8rem;color:var(--text2);margin-top:7px;line-height:1.7;}
+
+/* ══ FEE ITEMS ══ */
+.fee-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border2);}
+.fee-row:last-child{border-bottom:none;}
+.fee-av{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0;}
+
+/* ══ TIMETABLE ══ */
+.tt-table{width:100%;border-collapse:collapse;}
+.tt-table th,.tt-table td{padding:10px 9px;text-align:center;border:1px solid var(--border2);font-size:.78rem;}
+.tt-table th{background:rgba(0,0,0,.35);color:var(--text3);font-weight:700;letter-spacing:.3px;}
+.tt-period{display:block;background:rgba(0,229,255,.08);color:var(--cyan);border-radius:7px;padding:7px 5px;font-size:.76rem;font-weight:600;}
+.tt-break{color:var(--amber);font-style:italic;font-size:.76rem;}
+
+/* ══ MINI CHARTS ══ */
+.chart-container{height:170px;display:flex;align-items:flex-end;gap:6px;padding:8px 0 0;overflow:hidden;}
+.chart-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;}
+.chart-bar{width:100%;border-radius:5px 5px 0 0;min-height:4px;position:relative;cursor:pointer;transition:opacity .15s;}
+.chart-bar:hover{opacity:.8;}
+.chart-bar::after{content:attr(data-tip);position:absolute;bottom:calc(100%+4px);left:50%;transform:translateX(-50%);background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:3px 7px;font-size:.68rem;color:var(--text);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;}
+.chart-bar:hover::after{opacity:1;}
+.chart-label{font-size:.63rem;color:var(--text3);text-align:center;}
+
+/* ══ DONUT CHART ══ */
+.donut-wrap{position:relative;width:120px;height:120px;flex-shrink:0;}
+.donut-wrap svg{transform:rotate(-90deg);}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.donut-val{font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--cyan);}
+.donut-lbl{font-size:.65rem;color:var(--text3);}
+
+/* ══ AVATAR COLORS ══ */
+.av-0{background:linear-gradient(135deg,#1565c0,#42a5f5);}
+.av-1{background:linear-gradient(135deg,#2e7d32,#66bb6a);}
+.av-2{background:linear-gradient(135deg,#e65100,#ffa726);}
+.av-3{background:linear-gradient(135deg,#4a148c,#ab47bc);}
+.av-4{background:linear-gradient(135deg,#880e4f,#f06292);}
+.av-5{background:linear-gradient(135deg,#006064,#26c6da);}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.mob-open{transform:translateX(0);}
+  .main{margin-left:0!important;}
+  .page{padding:16px;}
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  .mob-toggle{display:flex!important;}
+  .top-search{display:none;}
+  .topbar-date{display:none;}
+  .form-grid{grid-template-columns:1fr;}
+}
+
+/* ══ PRINT ══ */
+@media print{
+  .sidebar,.topbar,.btn,.btn-row,.page-head .btn{display:none!important;}
+  .main{margin:0!important;}
+  body{background:#fff;color:#000;}
+}
+
+/* ══ LOADING ══ */
+.skeleton{background:linear-gradient(90deg,rgba(255,255,255,.04) 25%,rgba(255,255,255,.09) 50%,rgba(255,255,255,.04) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:7px;}
+</style>
+</head>
+<body>
+
+<!-- ══ File Install ══ -->
+<script src="sheets-integration.js"></script>
+
+   
+<!-- ══ LOGIN ══ -->
+<div id="login" class="login-screen">
+  <div class="login-bg">
+    <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+    <div class="grid-bg"></div><div class="scanline"></div>
+  </div>
+  <div class="login-card">
+    <div class="login-top">
+      <div class="login-logo-wrap">
+        <div class="logo-ring"></div><div class="logo-ring2"></div>
+        <div class="login-logo-icon">🎓</div>
+      </div>
+      <h1 class="login-school">EduManage <em>Pro</em></h1>
+      <p class="login-tagline">Hemayetpur Laboratory School & College · Next Gen OS</p>
+    </div>
+    <div class="role-selector">
+      <button class="role-btn active" onclick="selectRole('admin',this)" data-role="admin">🛡 Admin</button>
+      <button class="role-btn" onclick="selectRole('teacher',this)" data-role="teacher">👨‍🏫 Teacher</button>
+      <button class="role-btn" onclick="selectRole('student',this)" data-role="student">🎓 Student</button>
+    </div>
+    <div class="input-field">
+      <label>ইউজার আইডি</label>
+      <input type="text" id="l-uid" placeholder="admin / teacher01 / STU001" value="admin"/>
+    </div>
+    <div class="input-field">
+      <label>পাসওয়ার্ড</label>
+      <input type="password" id="l-pwd" placeholder="••••••••" value="123456" onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <button class="login-cta" onclick="doLogin()">সিস্টেমে প্রবেশ করুন →</button>
+    <div class="demo-creds">
+      <div class="demo-cred" onclick="fillDemo('admin')"><strong>Admin</strong>admin · 123456</div>
+      <div class="demo-cred" onclick="fillDemo('teacher01')"><strong>Teacher</strong>teacher01 · 123456</div>
+      <div class="demo-cred" onclick="fillDemo('STU001')"><strong>Student</strong>STU001 · 123456</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="app" class="app hidden">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="sidebar-header-inner">
+        <div style="display:flex;align-items:center">
+          <div class="logo-mark">E</div>
+          <div class="brand-text hide-collapsed">
+            <div class="brand-name">EduManage Pro</div>
+            <div class="brand-sub">School OS v3.0</div>
+          </div>
+        </div>
+        <button class="toggle-btn hide-collapsed" onclick="toggleSidebar()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="sidebar-user">
+        <div class="user-av" id="sav" style=""></div>
+        <div class="hide-collapsed">
+          <div class="user-name" id="sname">—</div>
+          <div class="user-title" id="srole">—</div>
+        </div>
+      </div>
+    </div>
+    <nav class="sidebar-nav" id="snav"></nav>
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="doLogout()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span class="hide-collapsed">লগআউট</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="main">
+    <header class="topbar">
+      <div class="topbar-l">
+        <button class="mob-toggle" onclick="toggleSidebar()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="breadcrumb" id="breadcrumb">
+          <span>Home</span><span class="sep">/</span><span class="current">Dashboard</span>
+        </div>
+      </div>
+      <div class="topbar-r">
+        <div class="topbar-date" id="tdate"></div>
+        <div class="search-wrap">
+          <div class="top-search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input placeholder="সার্চ করুন..." id="global-search" oninput="globalSearch(this.value)"/>
+          </div>
+        </div>
+        <div class="notif-wrap">
+          <div class="notif-icon" onclick="toggleNotif()">
+            🔔<div class="notif-dot">3</div>
+          </div>
+          <div class="notif-panel" id="notif-panel">
+            <div class="notif-head">বিজ্ঞপ্তি <span class="notif-clear" onclick="clearNotifs()">সব পড়েছি</span></div>
+            <div class="notif-row"><div class="notif-emoji" style="background:rgba(0,229,255,.1)">📝</div><div><div class="notif-text">নতুন ভর্তি আবেদন — রাফি আহমেদ</div><div class="notif-time">৫ মিনিট আগে</div></div></div>
+            <div class="notif-row"><div class="notif-emoji" style="background:rgba(255,64,129,.1)">💰</div><div><div class="notif-text">৫ জন শিক্ষার্থীর ফি বকেয়া রয়েছে</div><div class="notif-time">১ ঘণ্টা আগে</div></div></div>
+            <div class="notif-row"><div class="notif-emoji" style="background:rgba(255,179,0,.1)">📅</div><div><div class="notif-text">আগামীকাল Class 8 এর পরীক্ষা</div><div class="notif-time">৩ ঘণ্টা আগে</div></div></div>
+          </div>
+        </div>
+        <div class="user-chip" id="user-chip">
+          <div class="chip-av av-0" id="chip-av" style="color:#fff"></div>
+          <span class="chip-name" id="chip-name">—</span>
+        </div>
+      </div>
+    </header>
+    <div class="page" id="page"></div>
+  </main>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+// DATA LAYER
+// ════════════════════════════════════════════════════════
+const DB = {
+  users:[
+    {id:'admin',   pass:'123456',role:'admin',  name:'মো. রফিকুল ইসলাম',title:'Super Admin',    av:'RI',col:0},
+    {id:'teacher01',pass:'123456',role:'teacher',name:'সানজিদা আক্তার', title:'শ্রেণী শিক্ষক',  av:'SA',col:1},
+    {id:'teacher02',pass:'123456',role:'teacher',name:'মো. আবুল কালাম', title:'গণিত শিক্ষক',   av:'AK',col:2},
+    {id:'STU001',  pass:'123456',role:'student',name:'রাফি আহমেদ',      title:'Class 8 · Roll 1',av:'RA',col:3},
+  ],
+  students:[
+    {id:'STU001',name:'রাফি আহমেদ',    class:'Class 8',sec:'A',roll:1, gender:'M',dob:'2011-03-15',guardian:'আহমেদ আলী',  phone:'01711-000001',address:'ধামরাই, সাভার',   fee:'paid',   col:3,status:'active'},
+    {id:'STU002',name:'তানভীর হাসান',  class:'Class 9',sec:'B',roll:5, gender:'M',dob:'2010-07-22',guardian:'হাসান মিয়া',phone:'01711-000002',address:'হেমায়েতপুর',      fee:'unpaid', col:0,status:'active'},
+    {id:'STU003',name:'সাবিহা ইসলাম',  class:'Class 8',sec:'A',roll:2, gender:'F',dob:'2011-01-10',guardian:'ইসলাম সাহেব',phone:'01711-000003',address:'আশুলিয়া',         fee:'paid',   col:1,status:'active'},
+    {id:'STU004',name:'মেহেদী হাসান',  class:'Class 7',sec:'A',roll:8, gender:'M',dob:'2012-05-18',guardian:'হাসান ভাই',  phone:'01711-000004',address:'সাভার বাজার',     fee:'partial',col:2,status:'active'},
+    {id:'STU005',name:'নওরিন আক্তার',  class:'Class 9',sec:'A',roll:3, gender:'F',dob:'2010-11-30',guardian:'আক্তার সাহেব',phone:'01711-000005',address:'বিরুলিয়া',       fee:'paid',   col:4,status:'active'},
+    {id:'STU006',name:'সাকিব আল হাসান',class:'Class 6',sec:'B',roll:12,gender:'M',dob:'2013-02-14',guardian:'আল হাসান',   phone:'01711-000006',address:'হেমায়েতপুর',      fee:'unpaid', col:5,status:'active'},
+    {id:'STU007',name:'ফারহানা বেগম',  class:'Class 10',sec:'A',roll:1,gender:'F',dob:'2009-08-25',guardian:'রহিম সাহেব', phone:'01711-000007',address:'সাভার DEPZ',      fee:'paid',   col:4,status:'active'},
+    {id:'STU008',name:'রাকিব হোসেন',   class:'Class 7',sec:'B',roll:15,gender:'M',dob:'2012-04-03',guardian:'হোসেন মিয়া',phone:'01711-000008',address:'চন্দ্রা',          fee:'paid',   col:0,status:'inactive'},
+  ],
+  teachers:[
+    {id:'T001',name:'সানজিদা আক্তার',  subj:'বাংলা ও ইংরেজি',cls:'Class 8', phone:'01811-001001',qual:'M.A.(Bangla)',  exp:'8 বছর', sal:25000,join:'2016-01-10',status:'active',  col:1},
+    {id:'T002',name:'মো. আবুল কালাম',  subj:'গণিত',           cls:'Class 9', phone:'01811-001002',qual:'M.Sc.(Math)',   exp:'12 বছর',sal:28000,join:'2012-06-15',status:'active',  col:2},
+    {id:'T003',name:'রেহানা পারভীন',   subj:'বিজ্ঞান',        cls:'Class 7', phone:'01811-001003',qual:'B.Sc.(Science)',exp:'5 বছর', sal:22000,join:'2019-01-08',status:'active',  col:4},
+    {id:'T004',name:'মো. শফিকুল ইসলাম',subj:'সমাজ বিজ্ঞান',  cls:'Class 6', phone:'01811-001004',qual:'M.S.S.',        exp:'15 বছর',sal:30000,join:'2009-09-01',status:'active',  col:0},
+    {id:'T005',name:'নুসরাত জাহান',    subj:'ICT',             cls:'Class 10',phone:'01811-001005',qual:'B.Sc.(CSE)',    exp:'3 বছর', sal:20000,join:'2021-03-15',status:'active',  col:5},
+    {id:'T006',name:'মো. করিম উদ্দিন', subj:'ধর্ম শিক্ষা',   cls:'Class 8', phone:'01811-001006',qual:'কামিল',         exp:'20 বছর',sal:26000,join:'2004-07-20',status:'on-leave',col:3},
+  ],
+  classes:[
+    // প্রাক-প্রাথমিক
+    {id:'CNR', name:'Nursery',  branch:'general',   secs:['A'],     students:30, teacher:'', room:'001'},
+    {id:'CKG', name:'KG',       branch:'general',   secs:['A'],     students:32, teacher:'', room:'002'},
+    // প্রাথমিক
+    {id:'C1',  name:'Class 1',  branch:'general',   secs:['A','B'], students:45, teacher:'', room:'101'},
+    {id:'C2',  name:'Class 2',  branch:'general',   secs:['A','B'], students:44, teacher:'', room:'102'},
+    {id:'C3',  name:'Class 3',  branch:'general',   secs:['A','B'], students:46, teacher:'', room:'103'},
+    {id:'C4',  name:'Class 4',  branch:'general',   secs:['A','B'], students:43, teacher:'', room:'104'},
+    {id:'C5',  name:'Class 5',  branch:'general',   secs:['A','B'], students:42, teacher:'', room:'105'},
+    // মাধ্যমিক
+    {id:'C6',  name:'Class 6',  branch:'general',   secs:['A','B'], students:38, teacher:'মো. শফিকুল ইসলাম', room:'201'},
+    {id:'C7',  name:'Class 7',  branch:'general',   secs:['A','B'], students:42, teacher:'রেহানা পারভীন',   room:'202'},
+    {id:'C8',  name:'Class 8',  branch:'general',   secs:['A','B'], students:45, teacher:'সানজিদা আক্তার',  room:'203'},
+    // নবম-দশম সাধারণ
+    {id:'C9G', name:'Class 9',  branch:'general',   secs:['A','B'], students:40, teacher:'মো. আবুল কালাম',  room:'204'},
+    {id:'C10G',name:'Class 10', branch:'general',   secs:['A'],     students:35, teacher:'নুসরাত জাহান',    room:'205'},
+    // নবম-দশম কারিগরি
+    {id:'C9T', name:'Class 9',  branch:'technical', secs:['A'],     students:30, teacher:'', room:'T01'},
+    {id:'C10T',name:'Class 10', branch:'technical', secs:['A'],     students:28, teacher:'', room:'T02'},
+    // উচ্চ মাধ্যমিক
+    {id:'C11', name:'Class 11', branch:'general',   secs:['A','B'], students:36, teacher:'', room:'301'},
+    {id:'C12', name:'Class 12', branch:'general',   secs:['A','B'], students:33, teacher:'', room:'302'},
+  ],
+  subjects:[
+    {id:'S01',name:'Bangla 1st Paper', code:'BNG1',clsId:'C8',teacher:'সানজিদা আক্তার', marks:100},
+    {id:'S02',name:'Bangla 2nd Paper', code:'BNG2',clsId:'C8',teacher:'সানজিদা আক্তার', marks:100},
+    {id:'S03',name:'English 1st Paper',code:'ENG1',clsId:'C8',teacher:'সানজিদা আক্তার', marks:100},
+    {id:'S04',name:'English 2nd Paper',code:'ENG2',clsId:'C8',teacher:'সানজিদা আক্তার', marks:100},
+    {id:'S05',name:'Mathematics',      code:'MTH', clsId:'C8',teacher:'মো. আবুল কালাম', marks:100},
+    {id:'S06',name:'Science',          code:'SCI', clsId:'C8',teacher:'রেহানা পারভীন',  marks:100},
+    {id:'S07',name:'BGS',              code:'BGS', clsId:'C8',teacher:'মো. শফিকুল ইসলাম',marks:100},
+    {id:'S08',name:'Agriculture',      code:'AGR', clsId:'C8',teacher:'মো. করিম উদ্দিন',marks:100},
+    {id:'S09',name:'Religion',         code:'REL', clsId:'C8',teacher:'মো. করিম উদ্দিন',marks:100},
+    {id:'S10',name:'ICT',              code:'ICT', clsId:'C8',teacher:'নুসরাত জাহান',   marks:100},
+  ],
+  results:[
+    {studentId:'STU001',exam:'3rd Terminal 2025',subjects:{
+      S01:{t:24,s:58},S02:{t:22,s:55},S03:{t:20,s:52},S04:{t:21,s:54},S05:{t:26,s:62},
+      S06:{t:25,s:60},S07:{t:23,s:56},S08:{t:22,s:50},S09:{t:25,s:63},S10:{t:27,s:65}
+    }},
+    {studentId:'STU003',exam:'3rd Terminal 2025',subjects:{
+      S01:{t:28,s:68},S02:{t:27,s:66},S03:{t:26,s:64},S04:{t:27,s:65},S05:{t:29,s:70},
+      S06:{t:28,s:68},S07:{t:27,s:66},S08:{t:26,s:63},S09:{t:28,s:67},S10:{t:29,s:71}
+    }},
+  ],
+  fees:[
+    {id:'F001',stuId:'STU001',month:'March 2025', amt:1200,paid:1200,date:'2025-03-05',status:'paid'},
+    {id:'F002',stuId:'STU002',month:'March 2025', amt:1200,paid:0,   date:null,        status:'unpaid'},
+    {id:'F003',stuId:'STU003',month:'March 2025', amt:1200,paid:1200,date:'2025-03-08',status:'paid'},
+    {id:'F004',stuId:'STU004',month:'March 2025', amt:1200,paid:600, date:'2025-03-10',status:'partial'},
+    {id:'F005',stuId:'STU005',month:'March 2025', amt:1200,paid:1200,date:'2025-03-02',status:'paid'},
+    {id:'F006',stuId:'STU006',month:'March 2025', amt:1200,paid:0,   date:null,        status:'unpaid'},
+    {id:'F007',stuId:'STU007',month:'March 2025', amt:1200,paid:1200,date:'2025-03-01',status:'paid'},
+    {id:'F008',stuId:'STU002',month:'Feb 2025',   amt:1200,paid:0,   date:null,        status:'unpaid'},
+  ],
+  attendance:{
+    'STU001':{'2025-03-01':'P','2025-03-02':'P','2025-03-03':'A','2025-03-04':'P','2025-03-05':'P',
+              '2025-03-06':'H','2025-03-07':'H','2025-03-08':'P','2025-03-09':'P','2025-03-10':'L',
+              '2025-03-11':'P','2025-03-12':'P','2025-03-13':'P','2025-03-14':'H','2025-03-15':'H',
+              '2025-03-16':'P','2025-03-17':'P','2025-03-18':'P','2025-03-19':'P','2025-03-20':'P',
+              '2025-03-21':'H','2025-03-22':'H','2025-03-23':'A','2025-03-24':'P','2025-03-25':'P',
+              '2025-03-26':'P','2025-03-27':'P','2025-03-28':'H','2025-03-29':'H','2025-03-30':'P','2025-03-31':'P'},
+  },
+  exams:[
+    {id:'E001',name:'1st Terminal 2025', cls:'Class 8',start:'2025-01-20',end:'2025-01-30',status:'completed'},
+    {id:'E002',name:'2nd Terminal 2025', cls:'Class 8',start:'2025-05-15',end:'2025-05-25',status:'upcoming'},
+    {id:'E003',name:'3rd Terminal 2025', cls:'Class 8',start:'2025-10-01',end:'2025-10-12',status:'upcoming'},
+    {id:'E004',name:'JSC Mock Test 2025',cls:'Class 8',start:'2025-11-01',end:'2025-11-10',status:'upcoming'},
+  ],
+  notices:[
+    {id:'N001',title:'বার্ষিক ক্রীড়া প্রতিযোগিতা ২০২৫',        type:'event', date:'2025-04-10',author:'Admin',  body:'আগামী ১০ এপ্রিল বার্ষিক ক্রীড়া প্রতিযোগিতা অনুষ্ঠিত হবে। সকল শিক্ষার্থী ও শিক্ষকদের যোগদান বাধ্যতামূলক।'},
+    {id:'N002',title:'মাসিক ফি জমার শেষ তারিখ',                  type:'urgent',date:'2025-04-05',author:'Admin',  body:'এপ্রিল মাসের ফি আগামী ১০ তারিখের মধ্যে জমা দিতে হবে। অন্যথায় জরিমানা প্রযোজ্য হবে।'},
+    {id:'N003',title:'২য় সাময়িক পরীক্ষার রুটিন প্রকাশ',        type:'normal',date:'2025-04-01',author:'পরীক্ষা কমিটি',body:'২য় সাময়িক পরীক্ষার রুটিন ওয়েবসাইটে প্রকাশ করা হয়েছে।'},
+    {id:'N004',title:'শিক্ষক-অভিভাবক মতবিনিময় সভা',            type:'event', date:'2025-03-28',author:'Admin',  body:'আগামী ১৫ এপ্রিল বিকাল ৩টায় শিক্ষক-অভিভাবক মতবিনিময় সভা অনুষ্ঠিত হবে।'},
+  ],
+  timetable:{
+    'Class 8':{
+      'সোমবার':   ['বাংলা ১ম','গণিত',      'বিরতি','ইংরেজি ১ম','বিজ্ঞান',  'ICT'],
+      'মঙ্গলবার': ['গণিত',    'ইংরেজি ২য়','বিরতি','বাংলা ২য়', 'BGS',      'ধর্ম'],
+      'বুধবার':   ['বিজ্ঞান', 'বাংলা ১ম',  'বিরতি','গণিত',      'ইংরেজি ১ম','কৃষি'],
+      'বৃহস্পতিবার':['ICT',   'ধর্ম',      'বিরতি','বিজ্ঞান',  'বাংলা ২য়', 'ইংরেজি ২য়'],
+      'শুক্রবার': ['জুমার ছুটি','','','','',''],
+    }
+  },
+  feeChart:[
+    {m:'জুলাই',v:45600},{m:'আগস্ট',v:52000},{m:'সেপ্টেম্বর',v:48000},
+    {m:'অক্টোবর',v:58000},{m:'নভেম্বর',v:55000},{m:'ডিসেম্বর',v:60000},
+    {m:'জানুয়ারি',v:42000},{m:'ফেব্রুয়ারি',v:50000},{m:'মার্চ',v:47000},
+  ],
+};
+
+// ════════════════════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════════════════════
+function grade(n){
+  if(n>=80) return{l:'A+',p:5.00,c:'var(--emerald)'};
+  if(n>=70) return{l:'A', p:4.00,c:'var(--emerald)'};
+  if(n>=60) return{l:'A-',p:3.50,c:'var(--cyan)'};
+  if(n>=50) return{l:'B', p:3.00,c:'var(--amber)'};
+  if(n>=40) return{l:'C', p:2.00,c:'var(--amber)'};
+  if(n>=33) return{l:'D', p:1.00,c:'var(--amber2)'};
+  return{l:'F',p:0,c:'var(--rose)'};
+}
+function getStu(id){return DB.students.find(s=>s.id===id);}
+function getTch(id){return DB.teachers.find(t=>t.id===id);}
+function fmtDate(d){if(!d)return'—';return new Date(d).toLocaleDateString('bn-BD',{day:'numeric',month:'long',year:'numeric'});}
+function fmtMoney(n){return'৳\u202f'+Number(n).toLocaleString('bn-BD');}
+function avCol(s){const c=['av-0','av-1','av-2','av-3','av-4','av-5'];let h=0;for(let x of s)h=(h*31+x.charCodeAt(0))%c.length;return c[h];}
+
+// ════════════════════════════════════════════════════════
+// APP STATE
+// ════════════════════════════════════════════════════════
+let CU = null;   // current user
+let CP = 'dashboard';
+let sidebarW = true;
+
+// ════════════════════════════════════════════════════════
+// NAV CONFIG
+// ════════════════════════════════════════════════════════
+const NAV = {
+  admin:[
+    {sec:'মূল মেনু'},
+    {id:'dashboard',icon:'◈',label:'ড্যাশবোর্ড'},
+    {sec:'শিক্ষার্থী'},
+    {id:'students',icon:'🎓',label:'শিক্ষার্থী',badge:'8'},
+    {id:'teachers',icon:'👨‍🏫',label:'শিক্ষক'},
+    {id:'classes',icon:'🏫',label:'শ্রেণী ও বিভাগ'},
+    {id:'subjects',icon:'📚',label:'বিষয়সমূহ'},
+    {id:'timetable',icon:'🗓',label:'সময়সূচি'},
+    {sec:'পরীক্ষা'},
+    {id:'exams',icon:'📝',label:'পরীক্ষা'},
+    {id:'results',icon:'📈',label:'ফলাফল'},
+    {id:'marksheet',icon:'📄',label:'মার্কশিট'},
+    {sec:'প্রশাসন'},
+    {id:'attendance',icon:'✅',label:'উপস্থিতি'},
+    {id:'fees',icon:'💰',label:'ফি',badge:'৫'},
+    {id:'notices',icon:'📢',label:'নোটিশ বোর্ড'},
+    {id:'reports',icon:'📊',label:'প্রতিবেদন'},
+  ],
+  teacher:[
+    {sec:'মূল'},
+    {id:'dashboard',icon:'◈',label:'ড্যাশবোর্ড'},
+    {sec:'শ্রেণীকক্ষ'},
+    {id:'students',icon:'🎓',label:'শিক্ষার্থী'},
+    {id:'attendance',icon:'✅',label:'উপস্থিতি'},
+    {id:'results',icon:'📈',label:'ফলাফল'},
+    {id:'marksheet',icon:'📄',label:'মার্কশিট'},
+    {id:'timetable',icon:'🗓',label:'সময়সূচি'},
+    {sec:'অন্যান্য'},
+    {id:'notices',icon:'📢',label:'নোটিশ'},
+  ],
+  student:[
+    {sec:'মূল'},
+    {id:'dashboard',icon:'◈',label:'ড্যাশবোর্ড'},
+    {sec:'আমার তথ্য'},
+    {id:'results',icon:'📈',label:'ফলাফল'},
+    {id:'marksheet',icon:'📄',label:'মার্কশিট'},
+    {id:'attendance',icon:'✅',label:'উপস্থিতি'},
+    {id:'timetable',icon:'🗓',label:'সময়সূচি'},
+    {id:'fees',icon:'💰',label:'ফি তথ্য'},
+    {sec:'অন্যান্য'},
+    {id:'notices',icon:'📢',label:'নোটিশ'},
+  ],
+};
+
+// ════════════════════════════════════════════════════════
+// AUTH
+// ════════════════════════════════════════════════════════
+let selRole = 'admin';
+function selectRole(role, btn){
+  selRole = role;
+  document.querySelectorAll('.role-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function fillDemo(uid){
+  document.getElementById('l-uid').value = uid;
+  document.getElementById('l-pwd').value = '123456';
+  const roleMap = {admin:'admin',teacher01:'teacher',teacher02:'teacher',STU001:'student'};
+  const r = roleMap[uid]||'admin';
+  selRole = r;
+  document.querySelectorAll('.role-btn').forEach(b=>b.classList.toggle('active',b.dataset.role===r));
+}
+function doLogin(){
+  const uid = document.getElementById('l-uid').value.trim();
+  const pwd = document.getElementById('l-pwd').value.trim();
+  const u = DB.users.find(x=>x.id===uid&&x.pass===pwd&&x.role===selRole);
+  if(!u){showToast('❌ ভুল আইডি বা পাসওয়ার্ড','rose');return;}
+  CU = u;
+  document.getElementById('login').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  initApp();
+}
+function doLogout(){
+  CU = null;
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('login').classList.remove('hidden');
+}
+
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
+function initApp(){
+  // Sidebar user
+  const savEl = document.getElementById('sav');
+  savEl.className = `user-av av-${CU.col}`;
+  savEl.style.color = '#fff';
+  savEl.textContent = CU.av;
+  document.getElementById('sname').textContent = CU.name;
+  document.getElementById('srole').textContent = CU.title;
+  // Chip
+  const chipAv = document.getElementById('chip-av');
+  chipAv.className = `chip-av av-${CU.col}`;
+  chipAv.style.color = '#fff';
+  chipAv.textContent = CU.av;
+  document.getElementById('chip-name').textContent = CU.name.split(' ').slice(-1)[0];
+  // Date
+  document.getElementById('tdate').textContent =
+    new Date().toLocaleDateString('bn-BD',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  buildNav();
+  navigate('dashboard');
+}
+function buildNav(){
+  const items = NAV[CU.role]||NAV.admin;
+  document.getElementById('snav').innerHTML = items.map(it=>{
+    if(it.sec) return `<div class="nav-group-label">${it.sec}</div>`;
+    return `<div class="nav-item" id="ni-${it.id}" onclick="navigate('${it.id}')">
+      <span class="nav-icon">${it.icon}</span>
+      <span class="nav-label hide-collapsed">${it.label}</span>
+      ${it.badge?`<span class="nav-badge hide-collapsed">${it.badge}</span>`:''}
+    </div>`;
+  }).join('');
+}
+function navigate(page){
+  CP = page;
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById(`ni-${page}`)?.classList.add('active');
+  const labels={dashboard:'ড্যাশবোর্ড',students:'শিক্ষার্থী',teachers:'শিক্ষক',classes:'শ্রেণী',
+    subjects:'বিষয়',timetable:'সময়সূচি',exams:'পরীক্ষা',results:'ফলাফল',marksheet:'মার্কশিট',
+    attendance:'উপস্থিতি',fees:'ফি',notices:'নোটিশ',reports:'প্রতিবেদন'};
+  document.getElementById('breadcrumb').innerHTML=
+    `<span>Home</span><span class="sep">/</span><span class="current">${labels[page]||page}</span>`;
+  const pages={dashboard:pgDashboard,students:pgStudents,teachers:pgTeachers,
+    classes:pgClasses,subjects:pgSubjects,timetable:pgTimetable,exams:pgExams,
+    results:pgResults,marksheet:pgMarksheet,attendance:pgAttendance,fees:pgFees,
+    notices:pgNotices,reports:pgReports};
+  const pc = document.getElementById('page');
+  pc.innerHTML='';
+  pc.style.animation='none';
+  requestAnimationFrame(()=>{pc.style.animation='';(pages[page]||pgComingSoon)(pc);});
+  if(window.innerWidth<768) document.getElementById('sidebar').classList.remove('mob-open');
+}
+function toggleSidebar(){
+  const sb = document.getElementById('sidebar');
+  if(window.innerWidth<768){sb.classList.toggle('mob-open');return;}
+  sidebarW = !sidebarW;
+  sb.classList.toggle('collapsed',!sidebarW);
+  document.getElementById('main').classList.toggle('wide',!sidebarW);
+}
+function toggleNotif(){document.getElementById('notif-panel').classList.toggle('open');}
+function clearNotifs(){document.getElementById('notif-panel').classList.remove('open');document.querySelector('.notif-dot').style.display='none';}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.notif-wrap')) document.getElementById('notif-panel')?.classList.remove('open');
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+// Global search placeholder
+function globalSearch(v){if(!v.trim())return; showToast(`🔍 "${v}" খোঁজা হচ্ছে...`,'cyan');}
+
+// ════════════════════════════════════════════════════════
+// DASHBOARD
+// ════════════════════════════════════════════════════════
+function pgDashboard(c){
+  const isStu = CU.role==='student';
+  const isTch = CU.role==='teacher';
+  const totalStu = DB.students.filter(s=>s.status==='active').length;
+  const totalTch = DB.teachers.filter(t=>t.status==='active').length;
+  const unpaid = DB.fees.filter(f=>f.status!=='paid').length;
+  const collected = DB.fees.filter(f=>f.status==='paid').reduce((a,f)=>a+f.paid,0);
+
+  let h = `<div class="page-head">
+    <div><h1 class="page-title">স্বাগতম, <em>${CU.name.split(' ')[0]}</em> 👋</h1>
+    <p class="page-sub">${new Date().toLocaleDateString('bn-BD',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p></div>
+  </div>`;
+
+  if(!isStu){
+    h += `<div class="stat-grid">
+      ${statCard('c-cyan','🎓',totalStu,'মোট শিক্ষার্থী','↑ সক্রিয়','up','students')}
+      ${statCard('c-amber','👨‍🏫',totalTch,'কর্মরত শিক্ষক','কর্মরত','up','teachers')}
+      ${statCard('c-emerald','🏫',DB.classes.length,'শ্রেণী','Class 6–10','up','classes')}
+      ${statCard('c-rose','⚠',unpaid,'বকেয়া ফি','↓ পেমেন্ট বাকি','dn','fees')}
+      ${statCard('c-violet','✅',fmtMoney(collected).replace('৳\u202f','৳'),'এই মাসে আদায়','মার্চ ২০২৫','up','fees')}
+    </div>`;
+  } else {
+    const stu = DB.students.find(s=>s.id===CU.id)||DB.students[0];
+    const att = DB.attendance[stu.id]||{};
+    const pDays = Object.values(att).filter(v=>v==='P').length;
+    const tDays = Object.values(att).filter(v=>v!=='H').length;
+    const pct = tDays?Math.round(pDays/tDays*100):0;
+    const fi = DB.fees.find(f=>f.stuId===stu.id);
+    h += `<div class="stat-grid">
+      ${statCard('c-cyan','📊','4.28','আমার GPA','3rd Terminal','up','results')}
+      ${statCard('c-emerald','✅',pct+'%','উপস্থিতির হার',pDays+' দিন উপস্থিত','up','attendance')}
+      ${statCard('c-amber','📝',stu.roll,'রোল নম্বর',stu.class,'up','marksheet')}
+      ${statCard(fi?.status==='paid'?'c-emerald':'c-rose','💰',fi?.status==='paid'?'পরিশোধ':'বকেয়া','মার্চ ফি','',fi?.status==='paid'?'up':'dn','fees')}
+    </div>`;
+  }
+
+  // Charts
+  h += `<div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px">`;
+  // Bar chart
+  const maxV = Math.max(...DB.feeChart.map(m=>m.v));
+  h += `<div class="card">
+    <div class="card-title">📊 মাসিক ফি আদায় ${isStu?'':'(৳)'}
+      <span style="margin-left:auto;font-size:.7rem;color:var(--text3);font-weight:400">লক্ষ্য: ৳৬০,০০০</span></div>
+    <div class="chart-container">
+      ${DB.feeChart.map(m=>{
+        const h2 = Math.round(m.v/maxV*140);
+        return `<div class="chart-col">
+          <div class="chart-bar" style="height:${h2}px;background:linear-gradient(to top,rgba(0,180,216,.6),rgba(0,229,255,.9));" data-tip="${m.m}: ৳${m.v.toLocaleString()}"></div>
+          <div class="chart-label">${m.m.slice(0,3)}</div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+
+  // Donut — attendance
+  const attPct = isStu ? (()=>{
+    const att=DB.attendance[CU.id]||{};
+    const p=Object.values(att).filter(v=>v==='P').length;
+    const t=Object.values(att).filter(v=>v!=='H').length;
+    return t?Math.round(p/t*100):0;
+  })() : 78;
+  const r=46, circ=2*Math.PI*r, offset = circ-(attPct/100*circ);
+  h += `<div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
+    <div class="card-title" style="margin-bottom:4px">উপস্থিতির হার</div>
+    <div class="donut-wrap">
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="${r}" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="10"/>
+        <circle cx="60" cy="60" r="${r}" fill="none" stroke="var(--emerald)" stroke-width="10"
+          stroke-dasharray="${circ}" stroke-dashoffset="${offset}"
+          stroke-linecap="round" style="transition:stroke-dashoffset 1s var(--ease)"/>
+      </svg>
+      <div class="donut-center">
+        <div class="donut-val">${attPct}%</div>
+        <div class="donut-lbl">উপস্থিত</div>
+      </div>
+    </div>
+    <div style="font-size:.75rem;color:var(--text3);text-align:center">
+      ${attPct>=75?'✅ পরীক্ষার যোগ্য':'⚠ ৭৫%-এর নিচে'}
+    </div>
+  </div>`;
+  h += `</div>`;
+
+  // Bottom row
+  h += `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">`;
+
+  // Notices
+  h += `<div class="card"><div class="card-title">📢 সাম্প্রতিক বিজ্ঞপ্তি</div>
+    ${DB.notices.slice(0,3).map(n=>`
+    <div class="notice-card ${n.type}" onclick="navigate('notices')" style="margin-bottom:8px;padding:10px 14px;">
+      <div class="notice-title" style="font-size:.82rem">${n.title}</div>
+      <div class="notice-meta">${fmtDate(n.date)}</div>
+    </div>`).join('')}
+    <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:8px" onclick="navigate('notices')">সব দেখুন →</button>
+  </div>`;
+
+  // Upcoming exams
+  h += `<div class="card"><div class="card-title">📝 আসন্ন পরীক্ষা</div>
+    ${DB.exams.filter(e=>e.status!=='completed').map(e=>`
+    <div style="display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border2)">
+      <div style="width:34px;height:34px;border-radius:8px;background:rgba(255,179,0,.1);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:var(--amber);flex-shrink:0">📋</div>
+      <div style="flex:1">
+        <div style="font-size:.83rem;font-weight:700;color:var(--text)">${e.name}</div>
+        <div style="font-size:.7rem;color:var(--text3);margin-top:2px">${fmtDate(e.start)}</div>
+      </div>
+      <span class="badge bg-amber">আসন্ন</span>
+    </div>`).join('')}
+  </div>`;
+
+  // Activity
+  h += `<div class="card"><div class="card-title">🕐 কার্যক্রম</div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-time">আজ ১০:৩০</div><div class="tl-text">নতুন শিক্ষার্থী STU008 ভর্তি</div></div>
+      <div class="tl-item"><div class="tl-time">গতকাল ৩:০০</div><div class="tl-text">Class 8A মার্কশিট আপডেট</div></div>
+      <div class="tl-item"><div class="tl-time">গতকাল ১১:০০</div><div class="tl-text">ফি আদায় — রাফি আহমেদ ৳১,২০০</div></div>
+      <div class="tl-item"><div class="tl-time">৩ দিন আগে</div><div class="tl-text">বার্ষিক ক্রীড়া নোটিশ প্রকাশ</div></div>
+    </div>
+  </div>`;
+  h += `</div>`;
+  c.innerHTML = h;
+}
+function statCard(col,icon,val,label,delta,dir,page){
+  return `<div class="stat-card ${col}" onclick="navigate('${page}')">
+    <div class="stat-glow"></div>
+    <div class="stat-icon-wrap">${icon}</div>
+    <div class="stat-val">${val}</div>
+    <div class="stat-label">${label}</div>
+    ${delta?`<div class="stat-delta ${dir}">${dir==='up'?'↑':'↓'} ${delta}</div>`:''}
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════════
+// STUDENTS
+// ════════════════════════════════════════════════════════
+function pgStudents(c){
+  let filter='', search='';
+  function filtered(){
+    return DB.students.filter(s=>{
+      let classMatch = true;
+      if(filter){
+        if(filter.includes('|')){
+          // "Class 9|general" বা "Class 9|technical"
+          const [cls, branch] = filter.split('|');
+          classMatch = s.class === cls && (s.branch || 'general') === branch;
+        } else {
+          classMatch = s.class === filter;
+        }
+      }
+      const searchMatch = !search || s.name.includes(search) || s.id.includes(search);
+      return classMatch && searchMatch;
+    });
+  }
+  function renderRows(){
+    const list=filtered();
+    document.getElementById('stu-tbody').innerHTML = list.map(s=>`
+    <tr>
+      <td><div style="display:flex;align-items:center;gap:10px">
+        <div class="user-av ${avCol(s.name)}" style="width:34px;height:34px;font-size:.75rem;color:#fff">${s.name.slice(0,2)}</div>
+        <div><div style="font-weight:700;color:var(--text)">${s.name}</div><div style="font-size:.69rem;color:var(--text3)">${s.id}</div></div>
+      </div></td>
+      <td><span class="badge bg-cyan">${s.class}</span></td>
+      <td><span class="badge ${s.branch==='technical'?'bg-amber':'bg-violet'}" style="font-size:.68rem">${s.branch==='technical'?'কারিগরি':'সাধারণ'}</span></td>
+      <td><span style="font-family:'JetBrains Mono';color:var(--amber)">${String(s.roll).padStart(2,'0')}</span></td>
+      <td>${s.sec}</td>
+      <td style="color:var(--text2)">${s.guardian}</td>
+      <td style="color:var(--text2)">${s.phone}</td>
+      <td><span class="badge ${s.fee==='paid'?'bg-emerald':s.fee==='partial'?'bg-amber':'bg-rose'}">${s.fee==='paid'?'পরিশোধ':s.fee==='partial'?'আংশিক':'বকেয়া'}</span></td>
+      <td><span class="badge ${s.status==='active'?'bg-cyan':'bg-gray'}">${s.status==='active'?'সক্রিয়':'নিষ্ক্রিয়'}</span></td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-ghost btn-xs" onclick="viewStu('${s.id}')">👁</button>
+          ${CU.role==='admin'?`<button class="btn btn-emerald btn-xs" onclick="editStuModal('${s.id}')">✏</button>`:''}
+          <button class="btn btn-cyan btn-xs" onclick="navigate('marksheet');setTimeout(()=>loadMkStu('${s.id}'),120)">📄</button>
+        </div>
+      </td>
+    </tr>`).join('')||`<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text3)">কোনো শিক্ষার্থী পাওয়া যায়নি</td></tr>`;
+    document.getElementById('stu-count').textContent = `${list.length} জন শিক্ষার্থী`;
+  }
+
+  c.innerHTML = `
+  <div class="page-head">
+    <div><h1 class="page-title">শিক্ষার্থী <em>ব্যবস্থাপনা</em></h1>
+    <p class="page-sub" id="stu-count"></p></div>
+    <div class="btn-row">
+      ${CU.role==='admin'?'<button class="btn btn-cyan" onclick="addStuModal()">➕ নতুন ভর্তি</button>':''}
+      <button class="btn btn-ghost" onclick="exportCSV()">📥 Export CSV</button>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:14px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <div class="search-bar" style="flex:1;min-width:200px">
+        🔍<input id="stu-srch" placeholder="নাম বা আইডি দিয়ে খুঁজুন..." oninput="window._ss(this.value)"/>
+      </div>
+      <select style="background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:9px;padding:9px 12px;color:var(--text);font-family:inherit" onchange="window._sf(this.value)">
+        <option value="">সকল শ্রেণী</option>
+        <optgroup label="প্রাক-প্রাথমিক">
+          <option value="Nursery">Nursery</option>
+          <option value="KG">KG</option>
+        </optgroup>
+        <optgroup label="প্রাথমিক (১-৫)">
+          ${['Class 1','Class 2','Class 3','Class 4','Class 5'].map(n=>`<option value="${n}">${n}</option>`).join('')}
+        </optgroup>
+        <optgroup label="মাধ্যমিক (৬-৮)">
+          ${['Class 6','Class 7','Class 8'].map(n=>`<option value="${n}">${n}</option>`).join('')}
+        </optgroup>
+        <optgroup label="সাধারণ (৯-১০)">
+          <option value="Class 9|general">Class 9 (সাধারণ)</option>
+          <option value="Class 10|general">Class 10 (সাধারণ)</option>
+        </optgroup>
+        <optgroup label="কারিগরি (৯-১০)">
+          <option value="Class 9|technical">Class 9 (কারিগরি)</option>
+          <option value="Class 10|technical">Class 10 (কারিগরি)</option>
+        </optgroup>
+        <optgroup label="উচ্চ মাধ্যমিক (১১-১২)">
+          <option value="Class 11">Class 11</option>
+          <option value="Class 12">Class 12</option>
+        </optgroup>
+      </select>
+    </div>
+  </div>
+  <div class="card tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>শিক্ষার্থী</th><th>শ্রেণী</th><th>শাখা</th><th>রোল</th><th>সেকশন</th><th>অভিভাবক</th><th>ফোন</th><th>ফি</th><th>অবস্থা</th><th>কার্যক্রম</th></tr></thead>
+      <tbody id="stu-tbody"></tbody>
+    </table>
+  </div>`;
+
+  window._ss = v=>{search=v;renderRows();};
+  window._sf = v=>{filter=v;renderRows();};
+  renderRows();
+}
+
+window.viewStu = function(id){
+  const s=getStu(id); if(!s) return;
+  const feeList = DB.fees.filter(f=>f.stuId===id);
+  openModal(`<div class="modal-head"><h2 class="modal-title">শিক্ষার্থীর প্রোফাইল</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div style="display:flex;align-items:center;gap:18px;padding-bottom:18px;border-bottom:1px solid var(--border2);margin-bottom:18px">
+      <div class="${avCol(s.name)}" style="width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;color:#fff;flex-shrink:0">${s.name.slice(0,2)}</div>
+      <div>
+        <div style="font-family:'Instrument Serif';font-size:1.4rem;color:var(--text)">${s.name}</div>
+        <div style="color:var(--cyan);font-size:.82rem;margin-top:2px">${s.id} · ${s.class} · রোল ${s.roll}</div>
+        <span class="badge ${s.status==='active'?'bg-emerald':'bg-gray'}" style="margin-top:4px">${s.status==='active'?'সক্রিয়':'নিষ্ক্রিয়'}</span>
+      </div>
+    </div>
+    <div class="form-grid" style="font-size:.84rem;gap:10px">
+      <div><span style="color:var(--text3)">লিঙ্গ: </span><strong>${s.gender==='M'?'পুরুষ':'মহিলা'}</strong></div>
+      <div><span style="color:var(--text3)">জন্ম: </span><strong>${fmtDate(s.dob)}</strong></div>
+      <div><span style="color:var(--text3)">অভিভাবক: </span><strong>${s.guardian}</strong></div>
+      <div><span style="color:var(--text3)">ফোন: </span><strong>${s.phone}</strong></div>
+      <div class="fg-full"><span style="color:var(--text3)">ঠিকানা: </span><strong>${s.address}</strong></div>
+    </div>
+    <div style="margin-top:16px">
+      <div class="card-title">ফি ইতিহাস</div>
+      ${feeList.slice(0,3).map(f=>`
+      <div class="fee-row">
+        <div style="flex:1"><div style="font-size:.84rem;font-weight:600;color:var(--text)">${f.month}</div></div>
+        <span class="badge ${f.status==='paid'?'bg-emerald':f.status==='partial'?'bg-amber':'bg-rose'}">${f.status==='paid'?'পরিশোধ':f.status==='partial'?'আংশিক':'বকেয়া'}</span>
+        <div style="font-family:'JetBrains Mono';font-size:.84rem;color:var(--text);min-width:80px;text-align:right">${fmtMoney(f.amt)}</div>
+      </div>`).join('')||'<p style="color:var(--text3);font-size:.82rem">কোনো তথ্য নেই</p>'}
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">বন্ধ করুন</button>
+      <button class="btn btn-cyan" onclick="closeModal();navigate('marksheet');setTimeout(()=>loadMkStu('${s.id}'),120)">📄 মার্কশিট</button>
+    </div>`,'modal-lg');
+};
+
+window.addStuModal = function(){
+  openModal(`<div class="modal-head"><h2 class="modal-title">নতুন শিক্ষার্থী ভর্তি</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="form-grid">
+      <div class="fg"><label>পুরো নাম *</label><input id="ns-n" placeholder="শিক্ষার্থীর নাম"/></div>
+      <div class="fg"><label>শ্রেণী *</label>
+        <select id="ns-cl" onchange="updateSecOptions('ns-cl','ns-sec')">
+          <optgroup label="── প্রাক-প্রাথমিক ──">
+            ${DB.classes.filter(c=>['CNR','CKG'].includes(c.id)).map(c=>`<option value="${c.id}|${c.name}|${c.branch}">${c.name}</option>`).join('')}
+          </optgroup>
+          <optgroup label="── প্রাথমিক (১-৫) ──">
+            ${DB.classes.filter(c=>['C1','C2','C3','C4','C5'].includes(c.id)).map(c=>`<option value="${c.id}|${c.name}|${c.branch}">${c.name}</option>`).join('')}
+          </optgroup>
+          <optgroup label="── মাধ্যমিক (৬-৮) ──">
+            ${DB.classes.filter(c=>['C6','C7','C8'].includes(c.id)).map(c=>`<option value="${c.id}|${c.name}|${c.branch}">${c.name}</option>`).join('')}
+          </optgroup>
+          <optgroup label="── নবম-দশম সাধারণ ──">
+            ${DB.classes.filter(c=>['C9G','C10G'].includes(c.id)).map(c=>`<option value="${c.id}|${c.name}|${c.branch}">${c.name} (সাধারণ)</option>`).join('')}
+          </optgroup>
+          <optgroup label="── নবম-দশম কারিগরি ──">
+            ${DB.classes.filter(c=>['C9T','C10T'].includes(c.id)).map(c=>`<option value="${c.id}|${c.name}|${c.branch}">${c.name} (কারিগরি)</option>`).join('')}
+          </optgroup>
+          <optgroup label="── উচ্চ মাধ্যমিক (১১-১২) ──">
+            ${DB.classes.filter(c=>['C11','C12'].includes(c.id)).map(c=>`<option value="${c.id}|${c.name}|${c.branch}">${c.name}</option>`).join('')}
+          </optgroup>
+        </select>
+      </div>
+      <div class="fg"><label>বিভাগ (Section)</label><select id="ns-sec"><option>A</option><option>B</option></select></div>
+      <div class="fg"><label>রোল নম্বর</label><input id="ns-rl" type="number" placeholder="01"/></div>
+      <div class="fg"><label>লিঙ্গ</label><select id="ns-gn"><option value="M">পুরুষ</option><option value="F">মহিলা</option></select></div>
+      <div class="fg"><label>জন্ম তারিখ</label><input id="ns-db" type="date"/></div>
+      <div class="fg"><label>অভিভাবক</label><input id="ns-gu" placeholder="অভিভাবকের নাম"/></div>
+      <div class="fg"><label>ফোন</label><input id="ns-ph" placeholder="01XXXXXXXXX"/></div>
+      <div class="fg fg-full"><label>ঠিকানা</label><textarea id="ns-ad" rows="2"></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">বাতিল</button>
+      <button class="btn btn-cyan" onclick="saveStu()">✅ ভর্তি করুন</button>
+    </div>`);
+};
+// শ্রেণী পরিবর্তনে section dropdown আপডেট
+window.updateSecOptions = function(clsSel, secSel) {
+  const val  = document.getElementById(clsSel).value;
+  const clsId = val.split('|')[0];
+  const cls   = DB.classes.find(c => c.id === clsId);
+  const secEl = document.getElementById(secSel);
+  if (!cls) return;
+  secEl.innerHTML = cls.secs.map(s => `<option>${s}</option>`).join('');
+};
+
+window.saveStu = function(){
+  const name = document.getElementById('ns-n').value.trim();
+  if(!name){showToast('নাম দিতে হবে','rose');return;}
+
+  // class dropdown value = "id|name|branch"
+  const clsVal   = document.getElementById('ns-cl').value;
+  const [clsId, clsName, clsBranch] = clsVal.split('|');
+  const branchLabel = clsBranch === 'technical' ? 'কারিগরি' : 'সাধারণ';
+
+  const newId = 'STU' + String(DB.students.length+1).padStart(3,'0');
+  const stuData = {
+    id      : newId,
+    name,
+    class   : clsName,
+    classId : clsId,
+    branch  : clsBranch || 'general',
+    sec     : document.getElementById('ns-sec').value,
+    roll    : parseInt(document.getElementById('ns-rl').value) || 99,
+    gender  : document.getElementById('ns-gn').value,
+    dob     : document.getElementById('ns-db').value,
+    guardian: document.getElementById('ns-gu').value,
+    phone   : document.getElementById('ns-ph').value,
+    address : document.getElementById('ns-ad').value,
+    fee     : 'unpaid',
+    col     : Math.floor(Math.random()*6),
+    status  : 'active'
+  };
+  DB.students.push(stuData);
+  closeModal();
+  navigate('students');
+  showToast(`✅ ${name} (${newId}) — ${clsName} ${clsBranch==='technical'?'(কারিগরি)':''} ভর্তি সম্পন্ন`, 'emerald');
+  sheetsPost('addStudent', {
+    id        : newId,
+    name,
+    className : clsName,
+    branch    : branchLabel,
+    section   : stuData.sec,
+    roll      : stuData.roll,
+    gender    : stuData.gender === 'M' ? 'পুরুষ' : 'মহিলা',
+    dob       : stuData.dob,
+    guardian  : stuData.guardian,
+    phone     : stuData.phone,
+    address   : stuData.address
+  });
+};
+
+window.editStuModal = function(id){
+  const s=getStu(id); if(!s) return;
+  openModal(`<div class="modal-head"><h2 class="modal-title">তথ্য সম্পাদনা — ${s.name}</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="form-grid">
+      <div class="fg"><label>নাম</label><input id="es-n" value="${s.name}"/></div>
+      <div class="fg"><label>শ্রেণী</label><select id="es-cl">${DB.classes.map(cl=>`<option ${cl.name===s.class?'selected':''}>${cl.name}</option>`).join('')}</select></div>
+      <div class="fg"><label>অভিভাবক</label><input id="es-gu" value="${s.guardian}"/></div>
+      <div class="fg"><label>ফোন</label><input id="es-ph" value="${s.phone}"/></div>
+      <div class="fg"><label>অবস্থা</label><select id="es-st"><option value="active" ${s.status==='active'?'selected':''}>সক্রিয়</option><option value="inactive">নিষ্ক্রিয়</option></select></div>
+      <div class="fg fg-full"><label>ঠিকানা</label><textarea id="es-ad">${s.address}</textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">বাতিল</button>
+      <button class="btn btn-cyan" onclick="updateStu('${id}')">💾 সংরক্ষণ</button>
+    </div>`);
+};
+window.updateStu = function(id){
+  const s=getStu(id);
+  s.name=document.getElementById('es-n').value;
+  s.class=document.getElementById('es-cl').value;
+  s.guardian=document.getElementById('es-gu').value;
+  s.phone=document.getElementById('es-ph').value;
+  s.status=document.getElementById('es-st').value;
+  s.address=document.getElementById('es-ad').value;
+  closeModal();navigate('students');showToast('✅ তথ্য আপডেট হয়েছে','emerald');
+};
+window.exportCSV = function(){
+  const rows=[['ID','নাম','শ্রেণী','রোল','অভিভাবক','ফোন','ফি']];
+  DB.students.forEach(s=>rows.push([s.id,s.name,s.class,s.roll,s.guardian,s.phone,s.fee]));
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(rows.map(r=>r.join(',')).join('\n'));
+  a.download='students.csv';a.click();showToast('📥 CSV ডাউনলোড হচ্ছে','cyan');
+};
+
+// ════════════════════════════════════════════════════════
+// TEACHERS
+// ════════════════════════════════════════════════════════
+function pgTeachers(c){
+  c.innerHTML = `
+  <div class="page-head">
+    <div><h1 class="page-title">শিক্ষক <em>ব্যবস্থাপনা</em></h1>
+    <p class="page-sub">${DB.teachers.length} জন শিক্ষক নিবন্ধিত</p></div>
+    ${CU.role==='admin'?'<button class="btn btn-cyan" onclick="addTchModal()">➕ নতুন শিক্ষক</button>':''}
+  </div>
+  <div class="card tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>শিক্ষক</th><th>বিষয়</th><th>শ্রেণী</th><th>ফোন</th><th>যোগ্যতা</th><th>অভিজ্ঞতা</th><th>বেতন</th><th>অবস্থা</th><th></th></tr></thead>
+      <tbody>
+        ${DB.teachers.map(t=>`
+        <tr>
+          <td><div style="display:flex;align-items:center;gap:10px">
+            <div class="${avCol(t.name)}" style="width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#fff">${t.name.slice(0,2)}</div>
+            <div><div style="font-weight:700;color:var(--text)">${t.name}</div><div style="font-size:.69rem;color:var(--text3)">${t.id}</div></div>
+          </div></td>
+          <td><span class="badge bg-violet">${t.subj}</span></td>
+          <td>${t.cls}</td>
+          <td>${t.phone}</td>
+          <td style="color:var(--text2)">${t.qual}</td>
+          <td style="color:var(--text2)">${t.exp}</td>
+          <td style="font-family:'JetBrains Mono';color:var(--amber)">${fmtMoney(t.sal)}</td>
+          <td><span class="badge ${t.status==='active'?'bg-emerald':'bg-amber'}">${t.status==='active'?'কর্মরত':'ছুটিতে'}</span></td>
+          <td><button class="btn btn-ghost btn-xs" onclick="viewTch('${t.id}')">👁 দেখুন</button></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+window.viewTch = function(id){
+  const t=getTch(id); if(!t) return;
+  openModal(`<div class="modal-head"><h2 class="modal-title">শিক্ষকের প্রোফাইল</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border2)">
+      <div class="${avCol(t.name)}" style="width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;color:#fff">${t.name.slice(0,2)}</div>
+      <div>
+        <div style="font-family:'Instrument Serif';font-size:1.4rem">${t.name}</div>
+        <div style="color:var(--cyan);font-size:.82rem">${t.subj} শিক্ষক · ${t.id}</div>
+      </div>
+    </div>
+    <div class="form-grid" style="font-size:.84rem;gap:10px">
+      <div><span style="color:var(--text3)">যোগ্যতা: </span><strong>${t.qual}</strong></div>
+      <div><span style="color:var(--text3)">অভিজ্ঞতা: </span><strong>${t.exp}</strong></div>
+      <div><span style="color:var(--text3)">ফোন: </span><strong>${t.phone}</strong></div>
+      <div><span style="color:var(--text3)">যোগদান: </span><strong>${fmtDate(t.join)}</strong></div>
+      <div><span style="color:var(--text3)">মাসিক বেতন: </span><strong style="color:var(--amber)">${fmtMoney(t.sal)}</strong></div>
+      <div><span style="color:var(--text3)">শ্রেণী: </span><strong>${t.cls}</strong></div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">বন্ধ</button></div>`);
+};
+window.addTchModal = function(){
+  openModal(`<div class="modal-head"><h2 class="modal-title">নতুন শিক্ষক নিয়োগ</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="form-grid">
+      <div class="fg"><label>পুরো নাম *</label><input id="nt-n" placeholder="শিক্ষকের নাম"/></div>
+      <div class="fg"><label>বিষয়</label><input id="nt-s" placeholder="গণিত, বিজ্ঞান..."/></div>
+      <div class="fg"><label>শ্রেণী</label><select id="nt-cl">${DB.classes.map(c=>`<option>${c.name}</option>`).join('')}</select></div>
+      <div class="fg"><label>ফোন</label><input id="nt-ph" placeholder="01XXXXXXXXX"/></div>
+      <div class="fg"><label>যোগ্যতা</label><input id="nt-q" placeholder="M.Sc., B.Ed..."/></div>
+      <div class="fg"><label>মাসিক বেতন (৳)</label><input id="nt-sl" type="number" value="20000"/></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">বাতিল</button>
+      <button class="btn btn-cyan" onclick="saveTch()">✅ নিয়োগ দিন</button>
+    </div>`);
+};
+window.saveTch = function(){
+  const name=document.getElementById('nt-n').value.trim();
+  if(!name){showToast('নাম দিতে হবে','rose');return;}
+  const tData={id:'T'+String(DB.teachers.length+1).padStart(3,'0'),name,subj:document.getElementById('nt-s').value,
+    cls:document.getElementById('nt-cl').value,phone:document.getElementById('nt-ph').value,
+    qual:document.getElementById('nt-q').value,exp:'নতুন',sal:parseInt(document.getElementById('nt-sl').value)||20000,
+    join:new Date().toISOString().slice(0,10),status:'active',col:Math.floor(Math.random()*6)};
+  DB.teachers.push(tData);
+  closeModal();navigate('teachers');showToast(`✅ ${name} নিয়োগ সম্পন্ন`,'emerald');
+  sheetsPost('addTeacher',{id:tData.id,name,subject:tData.subj,className:tData.cls,
+    phone:tData.phone,qualification:tData.qual,salary:tData.sal,joinDate:tData.join});
+};
+
+// ════════════════════════════════════════════════════════
+// CLASSES
+// ════════════════════════════════════════════════════════
+function pgClasses(c){
+  c.innerHTML = `
+  <div class="page-head">
+    <div><h1 class="page-title">শ্রেণী ও <em>বিভাগ</em></h1></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px">
+    ${DB.classes.map((cl,i)=>{
+      const colors=['var(--cyan)','var(--amber)','var(--emerald)','var(--violet)','var(--rose)'];
+      const col=colors[i%colors.length];
+      return `<div class="card" style="cursor:pointer;transition:all .2s;border-color:rgba(${col==='var(--cyan)'?'0,229,255':col==='var(--amber)'?'255,179,0':col==='var(--emerald)'?'0,230,118':col==='var(--violet)'?'124,77,255':'255,64,129'},.15)"
+           onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''" onclick="viewClass('${cl.id}')">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div style="width:50px;height:50px;border-radius:14px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:1.1rem;font-weight:700;color:${col}">
+            ${cl.name.replace('Class ','')}</div>
+          <div><div style="font-weight:800;font-size:1.05rem;color:var(--text)">${cl.name}</div>
+          <div style="font-size:.73rem;color:var(--text3)">বিভাগ: ${cl.secs.join(', ')}</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div style="background:var(--glass);border-radius:8px;padding:9px 12px">
+            <div style="font-family:'JetBrains Mono';font-size:1.2rem;font-weight:700;color:${col}">${cl.students}</div>
+            <div style="font-size:.7rem;color:var(--text3)">শিক্ষার্থী</div>
+          </div>
+          <div style="background:var(--glass);border-radius:8px;padding:9px 12px">
+            <div style="font-size:.9rem;font-weight:700;color:var(--amber)">Room ${cl.room}</div>
+            <div style="font-size:.7rem;color:var(--text3)">কক্ষ নম্বর</div>
+          </div>
+        </div>
+        <div style="font-size:.78rem;color:var(--text2);border-top:1px solid var(--border2);padding-top:10px">👨‍🏫 ${cl.teacher}</div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+window.viewClass = function(id){
+  const cl=DB.classes.find(c=>c.id===id);
+  const stus=DB.students.filter(s=>s.class===cl.name);
+  openModal(`<div class="modal-head"><h2 class="modal-title">${cl.name} — বিস্তারিত</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+      <div class="card" style="text-align:center;padding:14px">
+        <div style="font-size:1.6rem;font-weight:700;color:var(--cyan)">${stus.length}</div>
+        <div style="font-size:.72rem;color:var(--text3)">শিক্ষার্থী</div>
+      </div>
+      <div class="card" style="text-align:center;padding:14px">
+        <div style="font-size:1.6rem;font-weight:700;color:var(--amber)">${cl.secs.length}</div>
+        <div style="font-size:.72rem;color:var(--text3)">বিভাগ</div>
+      </div>
+      <div class="card" style="text-align:center;padding:14px">
+        <div style="font-size:1rem;font-weight:700;color:var(--emerald)">Rm ${cl.room}</div>
+        <div style="font-size:.72rem;color:var(--text3)">কক্ষ</div>
+      </div>
+    </div>
+    <div style="font-size:.84rem;color:var(--text2);margin-bottom:12px">শ্রেণী শিক্ষক: <strong style="color:var(--text)">${cl.teacher}</strong></div>
+    <div class="card-title">শিক্ষার্থী তালিকা</div>
+    <div style="max-height:220px;overflow-y:auto">
+      ${stus.map(s=>`<div style="display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid var(--border2)">
+        <span style="font-family:'JetBrains Mono';font-size:.72rem;color:var(--text3);width:22px">${String(s.roll).padStart(2,'0')}</span>
+        <span style="font-size:.84rem;color:var(--text)">${s.name}</span>
+        <span class="badge ${s.fee==='paid'?'bg-emerald':'bg-rose'}" style="margin-left:auto">${s.fee==='paid'?'পরিশোধ':'বকেয়া'}</span>
+      </div>`).join('')}
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">বন্ধ</button></div>`,'modal-lg');
+};
+
+// ════════════════════════════════════════════════════════
+// SUBJECTS
+// ════════════════════════════════════════════════════════
+function pgSubjects(c){
+  c.innerHTML = `
+  <div class="page-head">
+    <div><h1 class="page-title">বিষয় <em>তালিকা</em></h1>
+    <p class="page-sub">${DB.subjects.length}টি বিষয় নিবন্ধিত</p></div>
+  </div>
+  <div class="card tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>কোড</th><th>বিষয়ের নাম</th><th>শ্রেণী</th><th>শিক্ষক</th><th>পূর্ণমান</th></tr></thead>
+      <tbody>
+        ${DB.subjects.map((s,i)=>`
+        <tr>
+          <td><span class="badge bg-cyan" style="font-family:'JetBrains Mono'">${s.code}</span></td>
+          <td style="font-weight:700;color:var(--text)">${s.name}</td>
+          <td>${DB.classes.find(c=>c.id===s.clsId)?.name||s.clsId}</td>
+          <td style="color:var(--text2)">${s.teacher}</td>
+          <td><span style="font-family:'JetBrains Mono';color:var(--amber)">${s.marks}</span></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════════
+// TIMETABLE
+// ════════════════════════════════════════════════════════
+function pgTimetable(c){
+  const tt=DB.timetable['Class 8'];
+  const days=Object.keys(tt);
+  const periods=['১ম পিরিয়ড','২য় পিরিয়ড','বিরতি','৩য় পিরিয়ড','৪র্থ পিরিয়ড','৫ম পিরিয়ড'];
+  c.innerHTML = `
+  <div class="page-head">
+    <div><h1 class="page-title">ক্লাস <em>সময়সূচি</em></h1>
+    <p class="page-sub">Class 8 — সাপ্তাহিক রুটিন ২০২৫</p></div>
+    <button class="btn btn-amber" onclick="window.print()">🖨️ প্রিন্ট</button>
+  </div>
+  <div class="card" style="margin-bottom:14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <span style="font-size:.8rem;color:var(--text3)">শ্রেণী:</span>
+    ${DB.classes.map(cl=>`<button class="btn btn-ghost btn-sm">${cl.name}</button>`).join('')}
+  </div>
+  <div class="card tbl-wrap">
+    <table class="tt-table">
+      <thead><tr><th style="width:110px">পিরিয়ড</th>${days.map(d=>`<th>${d}</th>`).join('')}</tr></thead>
+      <tbody>
+        ${periods.map((p,i)=>`<tr>
+          <td style="font-weight:700;color:var(--text2);font-size:.75rem">${p}</td>
+          ${days.map(d=>{
+            const sub=tt[d][i]||'—';
+            if(!sub||sub==='বিরতি'||d==='শুক্রবার') return `<td><span class="tt-break">${sub||'—'}</span></td>`;
+            return `<td><span class="tt-period">${sub}</span></td>`;
+          }).join('')}
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <div class="card-title">⏰ পিরিয়ড সময়</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem;color:var(--text2)">
+      <span>১ম: <strong style="color:var(--cyan)">৮:০০–৮:৪৫</strong></span>
+      <span>২য়: <strong style="color:var(--cyan)">৮:৪৫–৯:৩০</strong></span>
+      <span style="color:var(--amber)">বিরতি: ৯:৩০–১০:০০</span>
+      <span>৩য়: <strong style="color:var(--cyan)">১০:০০–১০:৪৫</strong></span>
+      <span>৪র্থ: <strong style="color:var(--cyan)">১০:৪৫–১১:৩০</strong></span>
+      <span>৫ম: <strong style="color:var(--cyan)">১১:৩০–১২:১৫</strong></span>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════════
+// EXAMS
+// ════════════════════════════════════════════════════════
+function pgExams(c){
+  const statusColor={completed:'bg-emerald',upcoming:'bg-cyan',ongoing:'bg-amber'};
+  const statusLabel={completed:'সম্পন্ন',upcoming:'আসন্ন',ongoing:'চলমান'};
+  c.innerHTML = `
+  <div class="page-head">
+    <div><h1 class="page-title">পরীক্ষা <em>তালিকা</em></h1></div>
+    ${CU.role==='admin'?'<button class="btn btn-cyan" onclick="addExamModal()">➕ নতুন পরীক্ষা</button>':''}
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px">
+    ${DB.exams.map(e=>`
+    <div class="card" style="transition:all .2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
+      <div style="display:flex;justify-content:space-between;margin-bottom:14px">
+        <div style="font-size:2rem">📋</div>
+        <span class="badge ${statusColor[e.status]}">${statusLabel[e.status]}</span>
+      </div>
+      <div style="font-weight:800;font-size:1rem;color:var(--text);margin-bottom:7px">${e.name}</div>
+      <div style="font-size:.78rem;color:var(--text3);margin-bottom:3px">📅 ${fmtDate(e.start)} – ${fmtDate(e.end)}</div>
+      <div style="font-size:.78rem;color:var(--text2);margin-bottom:14px">🏫 ${e.cls}</div>
+      <button class="btn btn-ghost btn-sm" style="width:100%" onclick="navigate('results')">ফলাফল দেখুন →</button>
+    </div>`).join('')}
+  </div>`;
+}
+window.addExamModal = function(){
+  openModal(`<div class="modal-head"><h2 class="modal-title">নতুন পরীক্ষা যোগ</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="form-grid">
+      <div class="fg fg-full"><label>পরীক্ষার নাম *</label><input id="ne-n" placeholder="1st Terminal 2025"/></div>
+      <div class="fg"><label>শ্রেণী</label><select id="ne-cl">${DB.classes.map(c=>`<option>${c.name}</option>`).join('')}</select></div>
+      <div class="fg"><label>শুরুর তারিখ</label><input id="ne-st" type="date"/></div>
+      <div class="fg"><label>শেষের তারিখ</label><input id="ne-et" type="date"/></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">বাতিল</button>
+      <button class="btn btn-cyan" onclick="saveExam()">✅ যোগ করুন</button>
+    </div>`);
+};
+window.saveExam = function(){
+  const name=document.getElementById('ne-n').value.trim();
+  if(!name){showToast('নাম দিন','rose');return;}
+  const eData={id:'E0'+(DB.exams.length+1),name,cls:document.getElementById('ne-cl').value,
+    start:document.getElementById('ne-st').value,end:document.getElementById('ne-et').value,status:'upcoming'};
+  DB.exams.push(eData);
+  closeModal();navigate('exams');showToast('✅ পরীক্ষা যোগ হয়েছে','emerald');
+  sheetsPost('addExam',{id:eData.id,name,className:eData.cls,startDate:eData.start,endDate:eData.end});
+};
+
+// ════════════════════════════════════════════════════════
+// RESULTS
+// ════════════════════════════════════════════════════════
+function pgResults(c){
+  const myId=CU.role==='student'?CU.id:null;
+  const resList=myId?DB.results.filter(r=>r.studentId===myId):DB.results;
+  c.innerHTML = `
+  <div class="page-head">
+    <div><h1 class="page-title">ফলাফল <em>বিশ্লেষণ</em></h1></div>
+    ${CU.role!=='student'?'<button class="btn btn-cyan" onclick="addResultModal()">➕ নম্বর এন্ট্রি</button>':''}
+  </div>
+  <div class="card tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>শিক্ষার্থী</th><th>পরীক্ষা</th><th>বিষয়</th><th>GPA</th><th>গ্রেড</th><th></th></tr></thead>
+      <tbody>
+        ${resList.map(r=>{
+          const stu=getStu(r.studentId);
+          const pts=Object.values(r.subjects).map(s=>grade(s.t+s.s).p);
+          const gpa=(pts.reduce((a,b)=>a+b,0)/pts.length).toFixed(2);
+          const g=grade(parseFloat(gpa)*20);
+          return `<tr>
+            <td><div style="display:flex;align-items:center;gap:9px">
+              <div class="${avCol(stu?.name||'X')}" style="width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#fff">${(stu?.name||'?').slice(0,2)}</div>
+              <span style="font-weight:700;color:var(--text)">${stu?.name}</span>
+            </div></td>
+            <td style="color:var(--text2)">${r.exam}</td>
+            <td style="text-align:center;color:var(--text3)">${Object.keys(r.subjects).length}</td>
+            <td><span style="font-family:'JetBrains Mono';font-size:.95rem;font-weight:700;color:var(--cyan)">${gpa}</span></td>
+            <td><span class="badge" style="color:${g.c};background:${g.c.replace('var(','').replace(')','').includes('emerald')?'rgba(0,230,118,.12)':'rgba(255,179,0,.12)'};border-color:${g.c.replace('var(','').replace(')','').includes('emerald')?'rgba(0,230,118,.2)':'rgba(255,179,0,.2)'}">${g.l}</span></td>
+            <td><button class="btn btn-cyan btn-xs" onclick="navigate('marksheet');setTimeout(()=>loadMkStu('${r.studentId}'),120)">📄 মার্কশিট</button></td>
+          </tr>`;
+        }).join('')||`<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text3)">কোনো ফলাফল নেই</td></tr>`}
+      </tbody>
+    </table>
+  </div>`;
+}
+window.addResultModal = function(){
+  openModal(`<div class="modal-head"><h2 class="modal-title">নম্বর এন্ট্রি</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="form-grid" style="margin-bottom:14px">
+      <div class="fg"><label>শিক্ষার্থী</label><select id="ar-s">${DB.students.map(s=>`<option value="${s.id}">${s.name}</option>`).join('')}</select></div>
+      <div class="fg"><label>পরীক্ষা</label><select id="ar-e">${DB.exams.map(e=>`<option>${e.name}</option>`).join('')}</select></div>
+    </div>
+    <div class="card-title" style="margin-bottom:10px">Tutorial (৩০) ও Semester (৭০) নম্বর</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      ${DB.subjects.map(s=>`
+      <div class="fg">
+        <label>${s.name}</label>
+        <div style="display:flex;gap:5px">
+          <input id="m-${s.id}-t" placeholder="Tut" style="width:50%;padding:8px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:7px;color:var(--text)"/>
+          <input id="m-${s.id}-s" placeholder="Sem" style="width:50%;padding:8px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:7px;color:var(--text)"/>
+        </div>
+      </div>`).join('')}
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">বাতিল</button>
+      <button class="btn btn-cyan" onclick="saveResult()">💾 সংরক্ষণ</button>
+    </div>`,'modal-lg');
+};
+window.saveResult = function(){
+  const stuId=document.getElementById('ar-s').value;
+  const exam=document.getElementById('ar-e').value;
+  const subjects={};
+  DB.subjects.forEach(s=>{
+    subjects[s.id]={t:parseInt(document.getElementById(`m-${s.id}-t`)?.value)||0,s:parseInt(document.getElementById(`m-${s.id}-s`)?.value)||0};
+  });
+  const idx=DB.results.findIndex(r=>r.studentId===stuId&&r.exam===exam);
+  if(idx>=0) DB.results[idx].subjects=subjects;
+  else DB.results.push({studentId:stuId,exam,subjects});
+  closeModal();navigate('results');showToast('✅ নম্বর সংরক্ষিত','emerald');
+  const stu=getStu(stuId);
+  DB.subjects.forEach(s=>{
+    const m=subjects[s.id];
+    sheetsPost('addResult',{studentId:stuId,studentName:stu?.name||'',className:stu?.class||'',
+      examName:exam,subject:s.name,tutorial:m.t,semester:m.s,total:m.t+m.s});
+  });
+};
+
+// ════════════════════════════════════════════════════════
+// MARKSHEET
+// ════════════════════════════════════════════════════════
+window.loadMkStu = function(id){
+  const sel=document.getElementById('ms-sel');
+  if(sel){sel.value=id;buildMarksheet();}
+};
+
+function pgMarksheet(c){
+  const isStu=CU.role==='student';
+  let selId=isStu?CU.id:(DB.results[0]?.studentId||'');
+
+  c.innerHTML = `
+  <div class="page-head">
+    <div><h1 class="page-title">মার্কশিট <em>প্রিন্ট</em></h1></div>
+    <button class="btn btn-amber" onclick="window.print()">🖨️ প্রিন্ট করুন</button>
+  </div>
+  ${!isStu?`<div class="card" style="margin-bottom:14px">
+    <div class="fg" style="max-width:300px">
+      <label>শিক্ষার্থী নির্বাচন</label>
+      <select id="ms-sel" onchange="window._mkSel(this.value)">
+        ${DB.students.map(s=>`<option value="${s.id}" ${s.id===selId?'selected':''}>${s.name} (${s.id})</option>`).join('')}
+      </select>
+    </div>
+  </div>`:''}
+  <div class="card" id="ms-preview"></div>`;
+
+  window._mkSel = id=>{selId=id;buildMarksheet();};
+  window.buildMarksheet = buildMarksheet;
+  function buildMarksheet(){
+    const ms=document.getElementById('ms-preview');
+    if(!ms) return;
+    const res=DB.results.find(r=>r.studentId===selId);
+    const stu=getStu(selId);
+    if(!res||!stu){ms.innerHTML='<p style="text-align:center;color:var(--text3);padding:40px">ফলাফল পাওয়া যায়নি</p>';return;}
+    let tGPA=0,cnt=0;
+    const rows=DB.subjects.map((sub,i)=>{
+      const m=res.subjects[sub.id]; if(!m) return '';
+      const tot=m.t+m.s; const g=grade(tot); tGPA+=g.p; cnt++;
+      return `<tr>
+        <td style="text-align:center;color:var(--text3)">${i+1}</td>
+        <td style="color:var(--text);font-weight:600">${sub.name}</td>
+        <td style="text-align:center;font-family:'JetBrains Mono'">${m.t}</td>
+        <td style="text-align:center;font-family:'JetBrains Mono'">${m.s}</td>
+        <td style="text-align:center;font-family:'JetBrains Mono';font-weight:700;color:var(--text)">${tot}</td>
+        <td style="text-align:center;font-weight:800;color:${g.c}">${g.l}</td>
+        <td style="text-align:center;font-family:'JetBrains Mono';color:${g.c}">${g.p.toFixed(2)}</td>
+      </tr>`;
+    }).join('');
+    const gpa=cnt?(tGPA/cnt).toFixed(2):'0.00';
+    const fg=grade(parseFloat(gpa)*20);
+    ms.innerHTML=`
+    <div style="text-align:center;padding-bottom:16px;margin-bottom:16px;border-bottom:2px solid var(--border)">
+      <div style="font-family:'Instrument Serif';font-size:1.6rem;color:var(--text)">Hemayetpur Laboratory School & College</div>
+      <div style="color:var(--text3);font-size:.8rem;margin-top:2px">Hemayetpur, Savar, Dhaka-1340</div>
+      <div style="color:var(--amber);font-weight:700;font-size:.88rem;margin-top:8px;letter-spacing:2px;text-transform:uppercase">Academic Transcript — 2025</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border2);border-radius:10px;overflow:hidden;margin-bottom:16px;font-size:.82rem">
+      <div style="padding:9px 14px;border-right:1px solid var(--border2);border-bottom:1px solid var(--border2)"><span style="color:var(--text3)">নাম: </span><strong style="color:var(--text)">${stu.name}</strong></div>
+      <div style="padding:9px 14px;border-bottom:1px solid var(--border2)"><span style="color:var(--text3)">শ্রেণী: </span><strong>${stu.class}</strong></div>
+      <div style="padding:9px 14px;border-right:1px solid var(--border2)"><span style="color:var(--text3)">আইডি: </span><strong style="color:var(--cyan)">${stu.id}</strong></div>
+      <div style="padding:9px 14px"><span style="color:var(--text3)">পরীক্ষা: </span><strong>${res.exam}</strong></div>
+    </div>
+    <div class="tbl-wrap">
+    <table class="tbl" style="font-size:.81rem">
+      <thead><tr><th style="text-align:center">ক্র.</th><th>বিষয়</th><th style="text-align:center">Tutorial (30)</th><th style="text-align:center">Semester (70)</th><th style="text-align:center">মোট</th><th style="text-align:center">গ্রেড</th><th style="text-align:center">পয়েন্ট</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <div style="display:flex;gap:12px;margin:16px 0;flex-wrap:wrap">
+      <div class="card" style="flex:1;text-align:center;min-width:90px;padding:14px">
+        <div style="font-family:'JetBrains Mono';font-size:1.8rem;font-weight:700;color:var(--cyan)">${gpa}</div>
+        <div style="font-size:.72rem;color:var(--text3)">সামগ্রিক GPA</div>
+      </div>
+      <div class="card" style="flex:1;text-align:center;min-width:90px;padding:14px">
+        <div style="font-size:1.8rem;font-weight:700;color:${fg.c}">${fg.l}</div>
+        <div style="font-size:.72rem;color:var(--text3)">গ্রেড</div>
+      </div>
+      <div class="card" style="flex:1;text-align:center;min-width:90px;padding:14px">
+        <div style="font-family:'JetBrains Mono';font-size:1.8rem;font-weight:700;color:var(--amber)">${cnt}/${DB.subjects.length}</div>
+        <div style="font-size:.72rem;color:var(--text3)">বিষয় উত্তীর্ণ</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;border-top:1px solid var(--border2);padding-top:20px">
+      ${['অভিভাবকের স্বাক্ষর','শ্রেণী শিক্ষকের স্বাক্ষর','প্রধান শিক্ষকের স্বাক্ষর'].map(s=>`
+      <div style="text-align:center">
+        <div style="border-bottom:1px solid var(--text3);height:36px;width:80%;margin:0 auto 6px"></div>
+        <div style="font-size:.72rem;color:var(--text3)">${s}</div>
+      </div>`).join('')}
+    </div>`;
+  }
+  buildMarksheet();
+}
+
+// ════════════════════════════════════════════════════════
+// ATTENDANCE
+// ════════════════════════════════════════════════════════
+function pgAttendance(c){
+  const isStu=CU.role==='student';
+  let stuId=isStu?CU.id:'STU001';
+  function buildAtt(){
+    const att=DB.attendance[stuId]||{};
+    const days=Object.keys(att).sort();
+    const pCnt=Object.values(att).filter(v=>v==='P').length;
+    const aCnt=Object.values(att).filter(v=>v==='A').length;
+    const lCnt=Object.values(att).filter(v=>v==='L').length;
+    const tDays=Object.values(att).filter(v=>v!=='H').length;
+    const pct=tDays?Math.round(pCnt/tDays*100):0;
+    const ap=document.getElementById('att-panel'); if(!ap) return;
+    ap.innerHTML=`
+    <div class="stat-grid" style="max-width:600px">
+      ${statCard('c-emerald','✅',pCnt,'উপস্থিত দিন',pct+'%','up','')}
+      ${statCard('c-rose','❌',aCnt,'অনুপস্থিত','',aCnt>2?'dn':'up','')}
+      ${statCard('c-amber','📋',lCnt,'ছুটি','','' ,'')}
+      ${statCard('c-cyan','📊',pct+'%','উপস্থিতির হার',tDays+' কার্যদিবস','up','')}
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="card-title">📅 মার্চ ২০২৫ — ক্যালেন্ডার
+        <div style="margin-left:auto;display:flex;gap:10px;font-size:.68rem;font-weight:400">
+          <span><span style="display:inline-block;width:10px;height:10px;background:rgba(0,230,118,.25);border-radius:2px;margin-right:4px"></span>উপস্থিত</span>
+          <span><span style="display:inline-block;width:10px;height:10px;background:rgba(255,64,129,.25);border-radius:2px;margin-right:4px"></span>অনুপস্থিত</span>
+          <span><span style="display:inline-block;width:10px;height:10px;background:rgba(255,179,0,.25);border-radius:2px;margin-right:4px"></span>ছুটি</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px">
+        ${'রবি,সোম,মঙ্গল,বুধ,বৃহ,শুক্র,শনি'.split(',').map(d=>`<div style="text-align:center;font-size:.66rem;color:var(--text3);padding:4px">${d}</div>`).join('')}
+      </div>
+      <div class="att-cal">
+        ${days.map(d=>{const v=att[d];const day=new Date(d).getDate();return`<div class="att-cell att-${v}" title="${d}: ${v}">${day}</div>`}).join('')}
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="card-title">উপস্থিতির হার বিশ্লেষণ</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:.82rem">
+        <span style="color:var(--text2)">${tDays} কার্যদিবসের মধ্যে ${pCnt} দিন উপস্থিত</span>
+        <strong style="color:${pct>=75?'var(--emerald)':pct>=60?'var(--amber)':'var(--rose)'}">${pct}%</strong>
+      </div>
+      <div class="prog-bar"><div class="prog-fill pf-${pct>=75?'emerald':pct>=60?'amber':'rose'}" style="width:${pct}%"></div></div>
+      ${pct<75?`<p style="color:var(--rose);font-size:.76rem;margin-top:8px">⚠ উপস্থিতি ৭৫%-এর নিচে। পরীক্ষায় অংশগ্রহণে বাধা হতে পারে।</p>`:''}
+    </div>`;
+  }
+
+  c.innerHTML = `
+  <div class="page-head">
+    <div><h1 class="page-title">উপস্থিতি <em>ব্যবস্থাপনা</em></h1></div>
+    ${!isStu?'<button class="btn btn-cyan" onclick="markAttModal()">✅ উপস্থিতি নিন</button>':''}
+  </div>
+  ${!isStu?`<div class="card" style="margin-bottom:14px">
+    <div class="fg" style="max-width:280px">
+      <label>শিক্ষার্থী নির্বাচন</label>
+      <select id="att-sel" onchange="window._attSel(this.value)">
+        ${DB.students.map(s=>`<option value="${s.id}">${s.name}</option>`).join('')}
+      </select>
+    </div>
+  </div>`:''}
+  <div id="att-panel"></div>`;
+
+  window._attSel = id=>{stuId=id;buildAtt();};
+  buildAtt();
+}
+window.markAttModal = function(){
+  const today=new Date().toISOString().slice(0,10);
+  openModal(`<div class="modal-head"><h2 class="modal-title">আজকের উপস্থিতি</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div style="font-size:.8rem;color:var(--text3);margin-bottom:14px">তারিখ: ${fmtDate(today)}</div>
+    <div class="tbl-wrap">
+    <table class="tbl" style="font-size:.82rem">
+      <thead><tr><th>শিক্ষার্থী</th><th style="text-align:center">উপস্থিত</th><th style="text-align:center">অনুপস্থিত</th><th style="text-align:center">ছুটি</th></tr></thead>
+      <tbody>
+        ${DB.students.slice(0,6).map(s=>`
+        <tr>
+          <td style="font-weight:600;color:var(--text)">${s.name} <span style="color:var(--text3);font-size:.72rem">${s.class}</span></td>
+          ${['P','A','L'].map(v=>`<td style="text-align:center"><input type="radio" name="a-${s.id}" value="${v}" ${v==='P'?'checked':''} style="accent-color:var(--cyan)"/></td>`).join('')}
+        </tr>`).join('')}
+      </tbody>
+    </table></div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">বাতিল</button>
+      <button class="btn btn-cyan" onclick="saveAtt('${today}')">✅ সংরক্ষণ</button>
+    </div>`,'modal-lg');
+};
+window.saveAtt = function(date){
+  DB.students.slice(0,6).forEach(s=>{
+    const v=document.querySelector(`input[name="a-${s.id}"]:checked`)?.value||'A';
+    if(!DB.attendance[s.id]) DB.attendance[s.id]={};
+    DB.attendance[s.id][date]=v;
+    sheetsPost('addAttendance',{date,studentId:s.id,studentName:s.name,className:s.class,
+      status:v==='P'?'উপস্থিত':v==='A'?'অনুপস্থিত':'ছুটি'});
+  });
+  closeModal();showToast('✅ উপস্থিতি সংরক্ষিত','emerald');
+};
+
+// ════════════════════════════════════════════════════════
+// FEES
+// ════════════════════════════════════════════════════════
+function pgFees(c){
+  const isStu=CU.role==='student';
+  const list=isStu?DB.fees.filter(f=>f.stuId===CU.id):DB.fees;
+  const collected=DB.fees.filter(f=>f.status==='paid').reduce((a,f)=>a+f.paid,0);
+  const pending=DB.fees.filter(f=>f.status!=='paid').reduce((a,f)=>a+(f.amt-f.paid),0);
+  c.innerHTML = `
+  <div class="page-head">
+    <div><h1 class="page-title">ফি <em>ব্যবস্থাপনা</em></h1></div>
+    ${!isStu?`<div class="btn-row">
+      <button class="btn btn-cyan" onclick="collectFeeModal()">💰 ফি গ্রহণ</button>
+      <button class="btn btn-ghost" onclick="feeRpt()">📊 রিপোর্ট</button>
+    </div>`:''}
+  </div>
+  ${!isStu?`<div class="stat-grid" style="max-width:450px;margin-bottom:18px">
+    ${statCard('c-emerald','✅',fmtMoney(collected),'মোট আদায়','এই মাস','up','')}
+    ${statCard('c-rose','⚠',fmtMoney(pending),'মোট বকেয়া','পরিশোধ বাকি','dn','')}
+  </div>`:''}
+  <div class="card tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>শিক্ষার্থী</th><th>মাস</th><th>পরিমাণ</th><th>পরিশোধ</th><th>তারিখ</th><th>অবস্থা</th>${!isStu?'<th></th>':''}</tr></thead>
+      <tbody>
+        ${list.map(f=>{
+          const stu=getStu(f.stuId);
+          return `<tr>
+            <td><div style="font-weight:700;color:var(--text)">${stu?.name||'?'}</div><div style="font-size:.7rem;color:var(--text3)">${stu?.class}</div></td>
+            <td style="color:var(--text2)">${f.month}</td>
+            <td style="font-family:'JetBrains Mono'">${fmtMoney(f.amt)}</td>
+            <td style="font-family:'JetBrains Mono';color:var(--emerald)">${fmtMoney(f.paid)}</td>
+            <td style="font-size:.76rem;color:var(--text3)">${fmtDate(f.date)}</td>
+            <td><span class="badge ${f.status==='paid'?'bg-emerald':f.status==='partial'?'bg-amber':'bg-rose'}">${f.status==='paid'?'পরিশোধ':f.status==='partial'?'আংশিক':'বকেয়া'}</span></td>
+            ${!isStu?`<td>${f.status!=='paid'?`<button class="btn btn-emerald btn-xs" onclick="payFee('${f.id}')">💰 পরিশোধ</button>`:''}</td>`:''}
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+window.payFee = function(id){
+  const f=DB.fees.find(x=>x.id===id); if(!f) return;
+  f.paid=f.amt;f.status='paid';f.date=new Date().toISOString().slice(0,10);
+  navigate('fees');showToast('✅ ফি পরিশোধ সম্পন্ন','emerald');
+  const stu=getStu(f.stuId);
+  sheetsPost('addFee',{studentId:f.stuId,studentName:stu?.name||'',className:stu?.class||'',
+    month:f.month,amount:f.amt,paid:f.amt,status:'পরিশোধিত',date:new Date().toLocaleDateString('bn-BD')});
+};
+window.collectFeeModal = function(){
+  openModal(`<div class="modal-head"><h2 class="modal-title">ফি গ্রহণ</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="form-grid">
+      <div class="fg"><label>শিক্ষার্থী *</label><select id="cf-s">${DB.students.map(s=>`<option value="${s.id}">${s.name}</option>`).join('')}</select></div>
+      <div class="fg"><label>মাস *</label><input id="cf-m" placeholder="April 2025"/></div>
+      <div class="fg"><label>পরিমাণ (৳)</label><input id="cf-a" type="number" value="1200"/></div>
+      <div class="fg"><label>পরিশোধ (৳)</label><input id="cf-p" type="number" value="1200"/></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">বাতিল</button>
+      <button class="btn btn-cyan" onclick="saveFee()">✅ সংরক্ষণ</button>
+    </div>`);
+};
+window.saveFee = function(){
+  const a=parseInt(document.getElementById('cf-a').value)||1200;
+  const p=parseInt(document.getElementById('cf-p').value)||0;
+  const stuId=document.getElementById('cf-s').value;
+  const month=document.getElementById('cf-m').value;
+  const status=p>=a?'paid':p>0?'partial':'unpaid';
+  DB.fees.push({id:'F'+String(DB.fees.length+1).padStart(3,'0'),stuId,month,amt:a,paid:p,
+    date:new Date().toISOString().slice(0,10),status});
+  closeModal();navigate('fees');showToast('✅ ফি এন্ট্রি সম্পন্ন','emerald');
+  const stu=getStu(stuId);
+  sheetsPost('addFee',{studentId:stuId,studentName:stu?.name||'',className:stu?.class||'',
+    month,amount:a,paid:p,status:status==='paid'?'পরিশোধিত':status==='partial'?'আংশিক':'বকেয়া',
+    date:new Date().toLocaleDateString('bn-BD')});
+};
+window.feeRpt = function(){
+  const paid=DB.fees.filter(f=>f.status==='paid').length;
+  const unpaid=DB.fees.filter(f=>f.status==='unpaid').length;
+  const partial=DB.fees.filter(f=>f.status==='partial').length;
+  const tot=paid+unpaid+partial;
+  openModal(`<div class="modal-head"><h2 class="modal-title">ফি সংগ্রহ রিপোর্ট</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
+      <div class="card" style="text-align:center"><div style="font-size:1.5rem;font-weight:700;color:var(--emerald)">${paid}</div><div style="font-size:.72rem;color:var(--text3)">পরিশোধ</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:1.5rem;font-weight:700;color:var(--rose)">${unpaid}</div><div style="font-size:.72rem;color:var(--text3)">বকেয়া</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:1.5rem;font-weight:700;color:var(--amber)">${partial}</div><div style="font-size:.72rem;color:var(--text3)">আংশিক</div></div>
+    </div>
+    <div class="prog-bar" style="height:10px;margin-bottom:8px"><div class="prog-fill pf-emerald" style="width:${Math.round(paid/tot*100)}%"></div></div>
+    <div style="text-align:center;font-size:.8rem;color:var(--text3)">${Math.round(paid/tot*100)}% পরিশোধ সম্পন্ন</div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">বন্ধ</button></div>`);
+};
+
+// ════════════════════════════════════════════════════════
+// NOTICES
+// ════════════════════════════════════════════════════════
+function pgNotices(c){
+  c.innerHTML = `
+  <div class="page-head">
+    <div><h1 class="page-title">নোটিশ <em>বোর্ড</em></h1></div>
+    ${CU.role==='admin'?'<button class="btn btn-cyan" onclick="addNoticeModal()">➕ নতুন নোটিশ</button>':''}
+  </div>
+  <div class="tab-bar">
+    <button class="tab active" onclick="filterNotice('all',this)">সব</button>
+    <button class="tab" onclick="filterNotice('urgent',this)">🚨 জরুরি</button>
+    <button class="tab" onclick="filterNotice('event',this)">🎉 ইভেন্ট</button>
+    <button class="tab" onclick="filterNotice('normal',this)">📌 সাধারণ</button>
+  </div>
+  <div id="notice-list">${renderNoticeItems(DB.notices)}</div>`;
+}
+function renderNoticeItems(list){
+  return list.map(n=>`
+  <div class="notice-card ${n.type}" onclick="viewNotice('${n.id}')">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+      <div class="notice-title">${n.title}</div>
+      <span class="badge ${n.type==='urgent'?'bg-rose':n.type==='event'?'bg-amber':'bg-cyan'}">${n.type==='urgent'?'জরুরি':n.type==='event'?'ইভেন্ট':'সাধারণ'}</span>
+    </div>
+    <div class="notice-meta">📅 ${fmtDate(n.date)} · ✍ ${n.author}</div>
+    <div class="notice-body">${n.body.slice(0,100)}${n.body.length>100?'…':''}</div>
+  </div>`).join('');
+}
+window.filterNotice = function(type,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const list=type==='all'?DB.notices:DB.notices.filter(n=>n.type===type);
+  document.getElementById('notice-list').innerHTML=renderNoticeItems(list);
+};
+window.viewNotice = function(id){
+  const n=DB.notices.find(x=>x.id===id); if(!n) return;
+  openModal(`<div class="modal-head"><h2 class="modal-title">${n.title}</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span class="badge ${n.type==='urgent'?'bg-rose':n.type==='event'?'bg-amber':'bg-cyan'}">${n.type==='urgent'?'জরুরি':n.type==='event'?'ইভেন্ট':'সাধারণ'}</span>
+      <span style="font-size:.78rem;color:var(--text3)">📅 ${fmtDate(n.date)} · ✍ ${n.author}</span>
+    </div>
+    <div style="font-size:.88rem;color:var(--text2);line-height:1.9">${n.body}</div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">বন্ধ</button></div>`);
+};
+window.addNoticeModal = function(){
+  openModal(`<div class="modal-head"><h2 class="modal-title">নতুন নোটিশ প্রকাশ</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="form-grid">
+      <div class="fg fg-full"><label>শিরোনাম *</label><input id="nn-t" placeholder="নোটিশের শিরোনাম"/></div>
+      <div class="fg"><label>ধরন</label><select id="nn-tp"><option value="normal">সাধারণ</option><option value="urgent">জরুরি</option><option value="event">ইভেন্ট</option></select></div>
+      <div class="fg"><label>তারিখ</label><input id="nn-d" type="date" value="${new Date().toISOString().slice(0,10)}"/></div>
+      <div class="fg fg-full"><label>বিস্তারিত *</label><textarea id="nn-b" rows="4" placeholder="নোটিশের বিস্তারিত..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">বাতিল</button>
+      <button class="btn btn-cyan" onclick="saveNotice()">📢 প্রকাশ করুন</button>
+    </div>`);
+};
+window.saveNotice = function(){
+  const t=document.getElementById('nn-t').value.trim();
+  const b=document.getElementById('nn-b').value.trim();
+  if(!t||!b){showToast('শিরোনাম ও বিস্তারিত দিন','rose');return;}
+  const nData={id:'N'+String(DB.notices.length+1).padStart(3,'0'),title:t,
+    type:document.getElementById('nn-tp').value,date:document.getElementById('nn-d').value,author:CU.name,body:b};
+  DB.notices.unshift(nData);
+  closeModal();navigate('notices');showToast('📢 নোটিশ প্রকাশিত হয়েছে','cyan');
+  sheetsPost('addNotice',{title:t,type:nData.type,date:nData.date,author:CU.name,body:b});
+};
+
+// ════════════════════════════════════════════════════════
+// GOOGLE SHEETS INTEGRATION
+// ════════════════════════════════════════════════════════
+
+// ⚠️ এখানে আপনার Apps Script Deployment URL বসান
+// Apps Script → Deploy → Manage deployments → URL কপি করুন
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz6vMjT1BNN9oUyZWVCeZ80TKfL4-cMwmClOQJbybONPs7v4ymvbFixk8CGT0CO7xku/exec';
+
+// ── Sheets এ data পাঠানোর function (CORS-safe) ───────────
+function sheetsPost(action, data) {
+  // method-1: no-cors দিয়ে POST (GitHub Pages → Apps Script)
+  // Apps Script থেকে response পাওয়া যাবে না, কিন্তু data যাবে
+  fetch(SHEETS_URL, {
+    method : 'POST',
+    mode   : 'no-cors',          // ← CORS error ঠিক করে
+    headers: { 'Content-Type': 'application/json' },
+    body   : JSON.stringify({ action, data })
+  })
+  .then(() => {
+    // no-cors এ response type = "opaque", তাই .json() কাজ করে না
+    // data গেছে ধরে নিয়ে সফলতার toast দেখাই
+    showToast('📊 Sheets এ সংরক্ষিত হচ্ছে…', 'emerald');
+  })
+  .catch(err => {
+    console.error('Sheets POST error:', err);
+    showToast('⚠️ Sheets সংযোগ ব্যর্থ — console দেখুন', 'amber');
+  });
+}
+
+// ── Apps Script সংযোগ পরীক্ষা (console থেকে চালান) ──────
+// ব্যবহার: sheetsTest()
+window.sheetsTest = async function() {
+  showToast('🔄 Sheets connection পরীক্ষা হচ্ছে…', 'cyan');
+  try {
+    // GET দিয়ে আগে check করি (CORS নেই তাই কাজ করে)
+    const r = await fetch(SHEETS_URL + '?test=1');
+    const j = await r.json();
+    console.log('✅ Apps Script সাড়া দিচ্ছে:', j);
+    showToast('✅ Apps Script সংযুক্ত! ' + (j.status || ''), 'emerald');
+  } catch(e) {
+    console.error('❌ Apps Script সংযোগ ব্যর্থ:', e);
+    showToast('❌ Apps Script URL ভুল বা deploy হয়নি', 'rose');
+  }
+};
+
+// ════════════════════════════════════════════════════════
+// REPORTS
+// ════════════════════════════════════════════════════════
+function pgReports(c){
+  const cards=[
+    {icon:'🎓',title:'শিক্ষার্থী রিপোর্ট',desc:'সম্পূর্ণ শিক্ষার্থী তালিকা ও তথ্য',col:'c-cyan',fn:'navigate("students")'},
+    {icon:'💰',title:'ফি সংগ্রহ রিপোর্ট',desc:'মাসিক ফি আদায়ের পরিসংখ্যান',col:'c-amber',fn:'feeRpt()'},
+    {icon:'✅',title:'উপস্থিতি রিপোর্ট',desc:'শ্রেণীভিত্তিক উপস্থিতির হার',col:'c-emerald',fn:'navigate("attendance")'},
+    {icon:'📈',title:'ফলাফল বিশ্লেষণ',desc:'পরীক্ষার ফলাফল ও GPA বিশ্লেষণ',col:'c-violet',fn:'navigate("results")'},
+    {icon:'👨‍🏫',title:'শিক্ষক রিপোর্ট',desc:'শিক্ষকদের সম্পূর্ণ তথ্য',col:'c-cyan',fn:'navigate("teachers")'},
+    {icon:'📄',title:'মার্কশিট প্রিন্ট',desc:'প্রিন্টযোগ্য মার্কশিট',col:'c-amber',fn:'navigate("marksheet")'},
+  ];
+  c.innerHTML = `
+  <div class="page-head">
+    <div><h1 class="page-title">প্রতিবেদন <em>কেন্দ্র</em></h1></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px">
+    ${cards.map(r=>`
+    <div class="stat-card ${r.col}" onclick="${r.fn}" style="cursor:pointer">
+      <div class="stat-glow"></div>
+      <div class="stat-icon-wrap" style="font-size:1.5rem">${r.icon}</div>
+      <div style="font-weight:800;font-size:.95rem;color:var(--text);margin-bottom:4px">${r.title}</div>
+      <div style="font-size:.77rem;color:var(--text3);margin-bottom:14px">${r.desc}</div>
+      <div style="font-size:.77rem;font-weight:700">দেখুন →</div>
+    </div>`).join('')}
+  </div>`;
+}
+
+function pgComingSoon(c){
+  c.innerHTML=`<div class="card" style="text-align:center;padding:60px"><div style="font-size:3rem;margin-bottom:14px">🚧</div><div style="font-family:'Instrument Serif';font-size:1.4rem;color:var(--text)">শীঘ্রই আসছে</div><div style="color:var(--text3);margin-top:6px">এই বিভাগটি তৈরি হচ্ছে</div></div>`;
+}
+
+// ════════════════════════════════════════════════════════
+// MODAL & TOAST
+// ════════════════════════════════════════════════════════
+function openModal(html,cls=''){
+  const bd=document.createElement('div');
+  bd.className='backdrop';bd.id='modal-bd';
+  bd.onclick=e=>{if(e.target===bd)closeModal();};
+  const m=document.createElement('div');
+  m.className=`modal ${cls}`;m.innerHTML=html;
+  bd.appendChild(m);document.body.appendChild(bd);
+}
+function closeModal(){document.getElementById('modal-bd')?.remove();}
+
+const TOAST_COL={cyan:'rgba(0,229,255,.15)',amber:'rgba(255,179,0,.15)',emerald:'rgba(0,230,118,.15)',rose:'rgba(255,64,129,.15)'};
+const TOAST_BC={cyan:'rgba(0,229,255,.3)',amber:'rgba(255,179,0,.3)',emerald:'rgba(0,230,118,.3)',rose:'rgba(255,64,129,.3)'};
+function showToast(msg,col='cyan'){
+  const t=document.createElement('div');
+  t.style.cssText=`position:fixed;bottom:24px;right:24px;z-index:9999;background:${TOAST_COL[col]||TOAST_COL.cyan};border:1px solid ${TOAST_BC[col]||TOAST_BC.cyan};backdrop-filter:blur(12px);border-radius:11px;padding:12px 18px;font-size:.86rem;color:var(--text);box-shadow:0 8px 28px rgba(0,0,0,.4);animation:fadeUp .25s ease both;max-width:320px;word-break:break-word`;
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(10px)';t.style.transition='all .3s';setTimeout(()=>t.remove(),300);},3000);
+}
+</script>
+</body>
+</html>
